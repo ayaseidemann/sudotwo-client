@@ -1,0 +1,16 @@
+@use "./variables" as *;
+
+// tablet sizing mixin
+@mixin tablet {
+    @media screen and (min-width: $tablet-screen-min) {
+        @content;
+    }
+}
+
+
+// desktop mixin
+@mixin desktop {
+    @media screen and (min-width: $desktop-screen-min) {
+        @content;
+    }
+}
