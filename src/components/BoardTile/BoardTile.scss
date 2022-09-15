@@ -2,8 +2,16 @@
 
 .tile {
     display: inline-block;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.669);
     height: 2rem;
     width: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.5rem
+}
+
+.col-3, .col-6 {
+    border-right: 2px solid rgb(255, 170, 0);
+}
+
+.row-3, .row-6 {
+    border-bottom: 1px solid rgb(255, 170, 0);
 }

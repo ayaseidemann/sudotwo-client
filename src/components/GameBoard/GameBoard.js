@@ -6,13 +6,22 @@ import BoardRow from '../BoardRow/BoardRow';
 function GameBoard() {
 
     const [board, setBoard] = useState([]);
-    const apiURL = ` https://sugoku.herokuapp.com/board?difficulty=easy`;
+    const [solution, setSolution] = useState([]);
+    const boardApiURL = ` https://sugoku.herokuapp.com/board?difficulty=easy`;
+    const solutionApiURL = `https://sugoku.herokuapp.com/solve`
     
-    // function geting board from sudoku api
+    // function geting board from sudoku
     function getBoard() {
-        axios.get(apiURL)
+        axios.get(boardApiURL)
             .then(response => {
                 setBoard(response.data.board);
+            })
+            .then(response => {
+                axios.post(solutionApiURL, {"board": board})
+                    .then(response => {
+                        console.log(response.data.solution);
+                        setSolution(response.data.solution);
+                    })
             })
             .catch(err => console.log(err));
     }
@@ -22,11 +31,13 @@ function GameBoard() {
     }, [])
 
     return (
-        board.map((row, i) => {
-            return(
-                <BoardRow index={i+1} row={row} />
-            )
-        })
+        <div className='game-board'>
+            {board.map((rowData, i) => {
+                return(
+                        <BoardRow rowNum={i+1} rowData={rowData} />
+                )
+            })}
+        </div>
     )
 }
 

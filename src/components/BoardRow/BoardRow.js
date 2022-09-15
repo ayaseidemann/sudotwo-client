@@ -1,19 +1,19 @@
 import './BoardRow.scss';
 import BoardTile from '../BoardTile/BoardTile';
 
-function BoardRow({ index, row }) {
+function BoardRow({ rowNum, rowData }) {
 
-    const ySectionNum = Math.ceil(index / 3);
+    const ySectionNum = Math.ceil(rowNum / 3);
 
     return (
-        <div className={`row row-${index} y-section-${ySectionNum}`}>
-            {row.map((val, i) => {
+        <div key={rowNum} className={`row row-${rowNum} y-section-${ySectionNum}`}>
+            {rowData.map((val, i) => {
                 return(
-                    <BoardTile index={i+1} val={val} />
+                    <BoardTile rowNum={rowNum} colNum={i+1} val={val} />
                 )
             })}
         </div>
     )
-};
+}
 
 export default BoardRow;
