@@ -33,7 +33,7 @@ function GameBoard() {
         <div className='game-board'>
             {board.map((rowData, i) => {
                 return(
-                        <BoardRow rowNum={i+1} rowData={rowData} />
+                        <BoardRow rowNum={i+1} rowData={rowData} solution={solution[i]}/>
                 )
             })}
         </div>
