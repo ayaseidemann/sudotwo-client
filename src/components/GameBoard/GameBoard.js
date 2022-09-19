@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import BoardRow from '../BoardRow/BoardRow';
 
-function GameBoard() {
+function GameBoard({ inputVal }) {
 
     const [roomId, setRoomId] = useState('');
     const [board, setBoard] = useState([]);
@@ -15,7 +15,7 @@ function GameBoard() {
         try {
             // const difficulty = useParams();
             const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
-            console.log(axiosGame);
+            // console.log(axiosGame);
             setRoomId(axiosGame.roomId);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
@@ -33,7 +33,12 @@ function GameBoard() {
         <div className='game-board'>
             {board.map((rowData, i) => {
                 return(
-                        <BoardRow rowNum={i+1} rowData={rowData} solution={solution[i]}/>
+                        <BoardRow 
+                            rowNum={i+1} 
+                            rowData={rowData} 
+                            solution={solution[i]}
+                            inputVal={inputVal}
+                        />
                 )
             })}
         </div>
