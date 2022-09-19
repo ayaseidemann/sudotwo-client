@@ -5,7 +5,8 @@
     border: 1px solid rgba(0, 0, 0, 0.669);
     height: 2rem;
     width: 2rem;
-    font-size: 1.5rem
+    font-size: 1.5rem;
+    caret-color: transparent;
 }
 
 .col-3, .col-6 {
@@ -14,4 +15,8 @@
 
 .row-3, .row-6 {
     border-bottom: 1px solid rgb(255, 170, 0);
+}
+
+.selected {
+    background-color: salmon;
 }
