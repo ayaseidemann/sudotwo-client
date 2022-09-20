@@ -1,33 +1,35 @@
 import './GameBoard.scss';
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import BoardRow from '../BoardRow/BoardRow';
 
-function GameBoard({ inputVal }) {
+function GameBoard({ roomId, board, solution, setSelectedTile }) {
 
-    const [roomId, setRoomId] = useState('');
-    const [board, setBoard] = useState([]);
-    const [solution, setSolution] = useState([]);
+    console.log('this is the board in the game board function: ', board);
+
+    // const [roomId, setRoomId] = useState('');
+    // const [board, setBoard] = useState([]);
+    // const [solution, setSolution] = useState([]);
     
-    // function geting board from server
-    async function getBoard() {
-        try {
-            // const difficulty = useParams();
-            const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
-            // console.log(axiosGame);
-            setRoomId(axiosGame.roomId);
-            setBoard(axiosGame.board);
-            setSolution(axiosGame.solution);
-        }
-        catch(err) {
-            console.log(err);
-        }
-    }
+    // // function geting board from server
+    // async function getBoard() {
+    //     try {
+    //         // const difficulty = useParams();
+    //         const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
+    //         // console.log(axiosGame);
+    //         setRoomId(axiosGame.roomId);
+    //         setBoard(axiosGame.board);
+    //         setSolution(axiosGame.solution);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //     }
+    // }
 
-    useEffect(() => {
-        getBoard();
-    }, []);
+    // useEffect(() => {
+    //     getBoard();
+    // }, []);
+    // console.log("the board is now: ", board);
 
     return (
         <div className='game-board'>
@@ -37,7 +39,7 @@ function GameBoard({ inputVal }) {
                             rowNum={i+1} 
                             rowData={rowData} 
                             solution={solution[i]}
-                            inputVal={inputVal}
+                            setSelectedTile={setSelectedTile}
                         />
                 )
             })}

@@ -1,7 +1,7 @@
 import './BoardRow.scss';
 import BoardTile from '../BoardTile/BoardTile';
 
-function BoardRow({ rowNum, rowData, solution, inputVal }) {
+function BoardRow({ rowNum, rowData, solution, setSelectedTile }) {
 
     const ySectionNum = Math.ceil(rowNum / 3);
 
@@ -14,7 +14,7 @@ function BoardRow({ rowNum, rowData, solution, inputVal }) {
                         colNum={i+1} 
                         val={val} 
                         solution={solution[i]}
-                        inputVal={inputVal}
+                        setSelectedTile={setSelectedTile}
                     />
                 )
             })}
