@@ -3,15 +3,16 @@ import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { io } from 'socket.io-client';
 
 
-function GamePage() {
+function GamePage({ socket }) {
 
     // set state for variables that change
     const [roomId, setRoomId] = useState('');
     const [board, setBoard] = useState([]);
     const [solution, setSolution] = useState([]);
-    const [inputVal, setInputVal] = useState('');
+    // const [inputVal, setInputVal] = useState('');
     const [selectedTile, setSelectedTile] = useState([]);
     const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
 
@@ -65,6 +66,9 @@ function GamePage() {
         // set selected tile in board to button's value
         tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
         setBoard(tmpBoard);
+
+        // emit to socket when a change is made
+        socket.emit('tile-change', newValue);
     }
 
     // click handler for emoji buttons
