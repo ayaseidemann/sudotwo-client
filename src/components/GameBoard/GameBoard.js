@@ -3,33 +3,9 @@ import { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BoardRow from '../BoardRow/BoardRow';
 
-function GameBoard({ roomId, board, solution, setSelectedTile }) {
+function GameBoard({ roomId, board, solution, setSelectedTile, selectedTile,emojiBoard }) {
 
     console.log('this is the board in the game board function: ', board);
-
-    // const [roomId, setRoomId] = useState('');
-    // const [board, setBoard] = useState([]);
-    // const [solution, setSolution] = useState([]);
-    
-    // // function geting board from server
-    // async function getBoard() {
-    //     try {
-    //         // const difficulty = useParams();
-    //         const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
-    //         // console.log(axiosGame);
-    //         setRoomId(axiosGame.roomId);
-    //         setBoard(axiosGame.board);
-    //         setSolution(axiosGame.solution);
-    //     }
-    //     catch(err) {
-    //         console.log(err);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getBoard();
-    // }, []);
-    // console.log("the board is now: ", board);
 
     return (
         <div className='game-board'>
@@ -40,6 +16,8 @@ function GameBoard({ roomId, board, solution, setSelectedTile }) {
                             rowData={rowData} 
                             solution={solution[i]}
                             setSelectedTile={setSelectedTile}
+                            selectedTile={selectedTile}
+                            emojiBoard={emojiBoard}
                         />
                 )
             })}
@@ -66,3 +44,27 @@ export default GameBoard;
     //         })
     //         .catch(err => console.log(err));
     // }
+
+        // const [roomId, setRoomId] = useState('');
+    // const [board, setBoard] = useState([]);
+    // const [solution, setSolution] = useState([]);
+    
+    // // function geting board from server
+    // async function getBoard() {
+    //     try {
+    //         // const difficulty = useParams();
+    //         const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
+    //         // console.log(axiosGame);
+    //         setRoomId(axiosGame.roomId);
+    //         setBoard(axiosGame.board);
+    //         setSolution(axiosGame.solution);
+    //     }
+    //     catch(err) {
+    //         console.log(err);
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     getBoard();
+    // }, []);
+    // console.log("the board is now: ", board);

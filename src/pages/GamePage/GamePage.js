@@ -11,7 +11,8 @@ function GamePage() {
     const [board, setBoard] = useState([]);
     const [solution, setSolution] = useState([]);
     const [inputVal, setInputVal] = useState('');
-    const [selectedTile, setSelectedTile] = useState([0, 0])
+    const [selectedTile, setSelectedTile] = useState([]);
+    const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
     
     // function geting board from server
     async function getBoard() {
@@ -33,22 +34,33 @@ function GamePage() {
     }, []);
 
 
-    const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X', '🤔', '👍'];
+    const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X'];
+    const emojiList = ['🤔', '👍'];
 
     function clickButton(event) {
-        console.log('in click button event');
-        console.log("selectedTile[0]: ", selectedTile[0]);
-        console.log("selectedTile[1]: ", selectedTile[1]);
-        // console.log("board[selectedTile[0]][selectedTile[1]]: ", board[selectedTile[0]][selectedTile[1]]);
         // setInputVal(event.target.innerText);
-
         const tmpBoard = [...board];
+        const newValue = event.target.innerText === 'X' ? '' : event.target.innerText;
+        if (newValue === '') {
+            updateSelectedEmoji('');
 
-        tmpBoard[selectedTile[0]][selectedTile[1]]=event.target.innerText
+        }
+        tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
         setBoard(tmpBoard);
-        // console.log("selected tile: ", selectedTile);
-        console.log("input value: ", Number(event.target.innerText));
-        console.log("board after click event: ", board);
+    }
+
+    function emojiClickButton(event) {
+        updateSelectedEmoji(event.target.innerText);
+    }
+
+    function updateSelectedEmoji(emojiString) {
+        const tmpEmojiBoard = [...emojiBoard];
+        let newEmoji = emojiString;
+        if (tmpEmojiBoard[selectedTile[0]][selectedTile[1]] === newEmoji) {
+            newEmoji = '';
+        }
+        tmpEmojiBoard[selectedTile[0]][selectedTile[1]] = newEmoji;
+        setEmojiBoard(tmpEmojiBoard);
     }
 
     return (
@@ -58,13 +70,24 @@ function GamePage() {
                 board={board}
                 solution={solution}
                 setSelectedTile={setSelectedTile}
+                selectedTile={selectedTile}
+                emojiBoard={emojiBoard}
             />
-            <div className='button-wrapper'>
-                {buttonList.map(btn => {
-                    return(
-                        <SelectorButton text={btn}  clickButton={clickButton}/>
-                    )
-                })}
+            <div className='buttons-wrapper'>
+                <div className='buttons__values'>
+                    {buttonList.map(btn => {
+                        return(
+                            <SelectorButton text={btn} clickButton={clickButton} />
+                        )
+                    })}
+                </div>
+                <div className='buttons__emojis'>
+                    {emojiList.map(btn => {
+                        return(
+                            <SelectorButton text={btn} clickButton={emojiClickButton} />
+                        )
+                    })}
+                </div>
             </div>
 
         </div>
