@@ -1,11 +1,7 @@
 import './GameBoard.scss';
-import { useEffect,useState } from 'react';
-import { useParams } from 'react-router-dom';
 import BoardRow from '../BoardRow/BoardRow';
 
 function GameBoard({ roomId, board, solution, setSelectedTile, selectedTile,emojiBoard }) {
-
-    console.log('this is the board in the game board function: ', board);
 
     return (
         <div className='game-board'>

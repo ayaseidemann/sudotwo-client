@@ -1,25 +1,37 @@
 
 
 .tile {
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.669);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 2rem;
     width: 2rem;
     font-size: 1.5rem;
-    text-align: center;
     position: relative;
 }
 
+.col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {
+    border-right: 1px solid rgba(0, 0, 0, 0.669);
+}
+
 .col-3, .col-6 {
-    border-right: 2px solid rgb(255, 170, 0);
+    border-right: 3px solid rgb(255, 170, 0);
+}
+
+.col-4, .col-7 {
+    border-left: none;
+}
+
+.row-1, .row-2, .row-4, .row-5, .row-7, .row-8 {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.669);
 }
 
 .row-3, .row-6 {
-    border-bottom: 1px solid rgb(255, 170, 0);
+    border-bottom: 3px solid rgb(255, 170, 0);
 }
 
 .selected {
-    background-color: salmon;
+    background-color: rgba(250, 177, 114, 0.39);
 }
 
 .locked {
@@ -28,7 +40,6 @@
 }
 
 .reaction {
-    // display: none;
     position: absolute;
     font-size: 16px;
     line-height: 16px;
