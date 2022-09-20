@@ -6,8 +6,8 @@
     height: 2rem;
     width: 2rem;
     font-size: 1.5rem;
-    caret-color: transparent;
     text-align: center;
+    position: relative;
 }
 
 .col-3, .col-6 {
@@ -25,4 +25,14 @@
 .locked {
     font-weight: bold;
     background-color: rgba(0, 0, 0, 0.075);
+}
+
+.reaction {
+    // display: none;
+    position: absolute;
+    font-size: 16px;
+    line-height: 16px;
+    right: -4px;
+    bottom: -4px;
+    z-index: 10;
 }
