@@ -1,12 +1,15 @@
 import './BoardTile.scss';
 import { useEffect,useState } from 'react';
 
-function BoardTile({ rowNum, colNum, val, solution, inputVal }) {
+function BoardTile({ rowNum, colNum, val, solution, setSelectedTile }) {
 
         const xSectionNum = Math.ceil(colNum / 3);
 
         function clickTile(event) {
             event.target.classList.add('selected');
+            console.log('clicked tile row: ', rowNum-1);
+            console.log('clicked tile column: ', colNum-1);
+            setSelectedTile([rowNum-1, colNum-1]);
         }
 
         function focusAway(event) {
@@ -15,31 +18,6 @@ function BoardTile({ rowNum, colNum, val, solution, inputVal }) {
     
         return (
             <>
-                {val !== 0 &&
-                    <input 
-                    key={`${rowNum}${colNum}`}
-                    row={rowNum}
-                    column={colNum}
-                    className={`tile col-${colNum} x-section-${xSectionNum}`} 
-                    solution={solution}
-                    placeholder={val}
-                    disabled
-                    />
-                }
-
-                {/* {blank && selected && inputVal &&
-                    <input
-                    key={`${rowNum}${colNum}`} 
-                    row={rowNum}
-                    column={colNum}
-                    className={`tile col-${colNum} x-section-${xSectionNum}`} 
-                    placeholder=" "
-                    maxLength={1}
-                    solution={solution}
-                    onClick={clickTile}
-                    onBlur={focusAway}
-                    />
-                } */}
 
                 {val === 0 &&
                     <input
@@ -52,6 +30,32 @@ function BoardTile({ rowNum, colNum, val, solution, inputVal }) {
                     solution={solution}
                     onClick={clickTile}
                     onBlur={focusAway}
+                    />
+                }
+
+                {typeof val === 'string' &&
+                    <input
+                    key={`${rowNum}${colNum}`} 
+                    row={rowNum}
+                    column={colNum}
+                    className={`tile col-${colNum} x-section-${xSectionNum}`} 
+                    placeholder={val}
+                    maxLength={1}
+                    solution={solution}
+                    onClick={clickTile}
+                    onBlur={focusAway}
+                    />
+                }
+
+                {typeof val === 'number' && val !== 0 &&
+                    <input 
+                    key={`${rowNum}${colNum}`}
+                    row={rowNum}
+                    column={colNum}
+                    className={`tile col-${colNum} x-section-${xSectionNum} locked`} 
+                    solution={solution}
+                    placeholder={val}
+                    disabled
                     />
                 }
             </>
