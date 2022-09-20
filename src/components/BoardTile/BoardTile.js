@@ -1,5 +1,4 @@
 import './BoardTile.scss';
-import { useEffect, useState } from 'react';
 
 function BoardTile({ rowNum, colNum, val, solution, setSelectedTile, selectedTile, emojiBoard }) {
 
@@ -10,31 +9,30 @@ function BoardTile({ rowNum, colNum, val, solution, setSelectedTile, selectedTil
         ? "selected"
         : "";
 
-    // 
+    // if the value is 0 set the tile to be blank
     const text = val === 0 ? "" : val;
-
 
     const emoji = emojiBoard[rowNum - 1][colNum -1]
         ? emojiBoard[rowNum - 1][colNum -1]
         : '';
     
+    // click event updating selected tile to the clicked tile
     function clickTile(event) {
-        console.log('clicked tile row: ', rowNum - 1);
-        console.log('clicked tile column: ', colNum - 1);
         setSelectedTile([rowNum - 1, colNum - 1]);
     }
 
     return (
         <>
             {/* if the value is a number not equal to zero the number was received
-                from the server and should not be editable */}
+                from the server and should not have a click handler and display the value
+                otherwise, the div should have a click handler and display text (set above)
+                and the emoji if there is one */}
             {typeof val === 'number' && val !== 0 ?
                 <div
                     key={`${rowNum}${colNum}`}
                     row={rowNum}
                     column={colNum}
                     className={`tile col-${colNum} x-section-${xSectionNum} locked`}
-                    solution={solution}
                 >{val}
                 </div> :
                 <div
