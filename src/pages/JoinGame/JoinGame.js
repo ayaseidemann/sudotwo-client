@@ -20,7 +20,7 @@ function JoinGame({ socket }) {
     return(
         <form onSubmit={joinExistingRoom}>
             <label>Room code
-                <input type='text' name='roomId'></input>
+                <input type='text' name='roomId' />
             </label>
             <SubmitButton text='Join Game'/>
         </form>
