@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-function CreateGame({ socket }) {
+function CreateGame({ socket, setUsername }) {
 
     let navigate = useNavigate();
 
@@ -13,7 +13,8 @@ function CreateGame({ socket }) {
         event.preventDefault();
         const uid = new ShortUniqueId({ length: 5 });
         const roomId = uid();
-        const { data: axiosGame } = await axios.get(`http://localhost:8080/setup-game/${roomId}`);
+        setUsername(event.target.name.value);
+        await axios.get(`http://localhost:8080/setup-game/${roomId}`);
         console.log('joining room: ', roomId);
         socket.emit('join-room', roomId);
         navigate(`/game/${roomId}`);
@@ -21,9 +22,9 @@ function CreateGame({ socket }) {
 
     return (
         <form onSubmit={joinNewRoom}>
-            {/* <label>Your name
+            <label>Your name
                 <input type='text' name='name' />
-            </label> */}
+            </label>
             <SubmitButton text='Create Game' />
         </form>
     )
