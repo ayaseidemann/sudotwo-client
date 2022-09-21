@@ -28,16 +28,27 @@ function GamePage({ socket }) {
             setRoomId(axiosGame.roomId);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
+
+            // emit board to socket for second user
+            socket.emit('create-game', axiosGame);
         }
         catch(err) {
             console.log(err);
         }
     }
 
+    // get game page from socket if room already created
+
     // create board on page load
     useEffect(() => {
         getBoard();
     }, []);
+
+    useEffect(() => {
+        socket.on('create-board', game => {
+            console.log('game received from the server: ', game);
+        })
+    }, [socket])
 
     // updates the emoji board when we input an emoji
     function updateSelectedEmoji(emojiString) {
@@ -77,6 +88,7 @@ function GamePage({ socket }) {
     }
 
     return (
+
         <div className='game-page'>
             <GameBoard 
                 roomId={roomId}
@@ -102,8 +114,8 @@ function GamePage({ socket }) {
                     })}
                 </div>
             </div>
-
         </div>
+
     )
 
 }
