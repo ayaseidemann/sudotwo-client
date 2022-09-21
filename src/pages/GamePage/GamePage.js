@@ -7,7 +7,7 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 
 
-function GamePage({ socket }) {
+function GamePage({ socket, username }) {
 
     const { roomId } = useParams();
 
@@ -90,6 +90,7 @@ function GamePage({ socket }) {
     return (
 
         <div className='game-page'>
+            <h1>Hi {username}</h1>
             <GameBoard 
                 roomId={roomId}
                 board={board}
