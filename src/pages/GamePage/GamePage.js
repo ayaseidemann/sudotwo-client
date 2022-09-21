@@ -2,14 +2,16 @@ import './GamePage.scss';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
 
 function GamePage({ socket }) {
 
+    const { roomId } = useParams();
+
     // set state for variables that change
-    const [roomId, setRoomId] = useState('');
     const [board, setBoard] = useState([]);
     const [solution, setSolution] = useState([]);
     // const [inputVal, setInputVal] = useState('');
@@ -20,12 +22,10 @@ function GamePage({ socket }) {
     const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X'];
     const emojiList = ['🤔', '👍'];
     
-    // get board, roomId, and solution from server
+    // get board, roomId, and solution from server json
     async function getBoard() {
         try {
-            // const difficulty = useParams();
-            const { data: axiosGame } = await axios.get(`http://localhost:8080/game/easy`);
-            setRoomId(axiosGame.roomId);
+            const { data: axiosGame } = await axios.get(`http://localhost:8080/read-game/${roomId}`);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
 
