@@ -1,6 +1,5 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { io } from 'socket.io-client';
 import { useState } from 'react';
 import LandingPage from './pages/LandingPage/LandingPage';
 import GamePage from './pages/GamePage/GamePage';
@@ -11,7 +10,7 @@ import CreateGame from './pages/CreateGame/CreateGame';
 
 function App() {
 
-  const socket = io.connect(`http://localhost:8080`);
+  // const socket = io.connect(`http://localhost:8080`);
 
   // set username
   const [username, setUsername] = useState('');
@@ -21,9 +20,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/game/:roomId' element={<GamePage socket={socket} username={username}/>} />
-          <Route path='/create-room' element={<CreateGame socket={socket} setUsername={setUsername}/>} />
-          <Route path='/join-room' element={<JoinGame socket={socket} setUsername={setUsername} />} />
+          <Route path='/game/:roomId' element={<GamePage username={username}/>} />
+          <Route path='/create-room' element={<CreateGame setUsername={setUsername}/>} />
+          <Route path='/join-room' element={<JoinGame setUsername={setUsername} />} />
         </Routes>
       </BrowserRouter>
     </div>

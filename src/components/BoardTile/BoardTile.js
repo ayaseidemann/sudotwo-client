@@ -4,21 +4,7 @@ import { useEffect, useState } from 'react';
 
 function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, selectedTile, emojiBoard, socket }) {
 
-    console.log('room id is:' + roomId);
-
     const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
-
-    function receiveTile() {
-        socket.on('receive-tile', tileCoords => {
-            console.log('other user selected tile', tileCoords);
-        });
-        console.log("in receive til useEffect");
-    };
-
-    useEffect(() => {
-        receiveTile();
-    }, []);
-
 
     const xSectionNum = Math.ceil(colNum / 3);
 
@@ -36,13 +22,18 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
     
     // click event updating selected tile to the clicked tile
     function clickTile(event) {
+        event.preventDefault();
         setSelectedTile([rowNum - 1, colNum - 1]);
         socket.emit('tile-selected', 
-            ({
+            {
                 roomId: roomId,
                 tileCoords: [rowNum - 1, colNum - 1]
-            }))
+            })
     }
+
+    useEffect(()=>{
+        console.log('tile mounted');
+    },[]);
 
     return (
         <>

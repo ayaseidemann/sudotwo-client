@@ -7,7 +7,7 @@ import BasicHeader from '../../components/BasicHeader/BasicHeader';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 
 
-function JoinGame({ socket, setUsername }) {
+function JoinGame({ setUsername }) {
 
     const navigate = useNavigate();
 
@@ -43,7 +43,6 @@ function JoinGame({ socket, setUsername }) {
         if (roomExists) {
             setUsername(event.target.name.value);
             console.log('joining room:', roomId);
-            await socket.emit('join-room', roomId);
             navigate(`/game/${roomId}`);
         } else {
             alert("this isn't a room dummy");
