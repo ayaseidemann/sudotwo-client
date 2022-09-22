@@ -1,10 +1,10 @@
 import './CreateGame.scss';
-import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import ShortUniqueId from 'short-unique-id';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import BasicHeader from '../../components/BasicHeader/BasicHeader';
+import SubmitButton from '../../components/SubmitButton/SubmitButton';
 
 
 function CreateGame({ socket, setUsername }) {
@@ -39,20 +39,26 @@ function CreateGame({ socket, setUsername }) {
     }
 
     return (
-        <form className='create-game' onSubmit={joinNewRoom}>
-            <BasicHeader text='Create game'/>
-            <label className='create-game__label'>
-                <p className='create-game__label-text'>Your name</p>
-                <input 
-                    className='create-game__input' 
-                    type='text' 
-                    name='name'
-                    maxLength='12'
-                    onChange={inputChange}
+        <>
+            <BasicHeader text='Create game' />
+            <form className='create-game' onSubmit={joinNewRoom}>
+                <label className='create-game__label'>
+                    <p className='create-game__label-text'>Your name</p>
+                    <input
+                        className='create-game__input'
+                        type='text'
+                        name='name'
+                        maxLength='12'
+                        onChange={inputChange}
+                    />
+                </label>
+                <SubmitButton 
+                    text='Create Game' 
+                    active={isButtonActive} 
+                    playerNum={1}
                 />
-            </label>
-            <SubmitButton text='Create Game' active={isButtonActive}/>
-        </form>
+            </form>
+        </>
     )
 }
 

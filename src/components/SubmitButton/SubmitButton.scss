@@ -11,6 +11,16 @@
     box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
     margin-bottom: 0.75rem;
 
+    &--player1 {
+        background-color: $player1-color;
+        color: $light;
+    }
+
+    &--player2 {
+        background-color: $player2-color;
+        color: $light;
+    }
+
     &--active {
         &:hover {
             cursor: pointer;
