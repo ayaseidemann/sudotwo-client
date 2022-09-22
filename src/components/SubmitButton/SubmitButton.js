@@ -3,7 +3,7 @@ import './SubmitButton.scss';
 function SubmitButton({ clickButton, text }) {
 
     return(
-        <button onClick={clickButton}>{text}</button>
+        <button onClick={clickButton} className='submit-button'>{text}</button>
     )
 }
 
