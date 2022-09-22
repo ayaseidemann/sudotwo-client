@@ -7,10 +7,12 @@ function LandingPage() {
 
     let navigate = useNavigate();
 
+    // click handler to navigate to Create Room page
     function createGameHandler(event) {
         navigate('/create-room');
     }
 
+    // click handler to navigate to Join Room page
     function joinGameHandler(event) {
         navigate('/join-room');
     }
@@ -21,8 +23,8 @@ function LandingPage() {
                 <div className='landing'>
                     <h1 className='landing__header'>Sudo<span className='landing__color'>two</span>!</h1>
                     <h2 className='landing__subheader'>These puzzles don't stand a chance</h2>
-                    <SubmitButton clickButton={createGameHandler} text='Create Game' />
-                    <SubmitButton clickButton={joinGameHandler} text='Join Game' />
+                    <SubmitButton clickButton={createGameHandler} text='Create Game' active={true}/>
+                    <SubmitButton clickButton={joinGameHandler} text='Join Game' active={true}/>
                 </div>
             </div>
             <footer className='landing__footer'>

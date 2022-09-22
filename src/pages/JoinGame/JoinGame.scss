@@ -1,0 +1,40 @@
+@use '../../styles/partials/variables' as *;
+
+.join-game {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+
+        &-text {
+            font-size: 1rem;
+            font-weight: $extra-bold;
+            text-transform: uppercase;
+            margin: 0 0 0.37rem;
+        }
+    }
+
+    &__input {
+        height: 2.5rem;
+        padding-left: 0.63rem;
+        color: $player2-color;
+        font-size: 1rem;
+        font-weight: $extra-bold;
+        text-transform: uppercase;
+        border: 2px solid $primary-dark;
+        box-shadow: inset 0px 3px 0px rgba(0, 0, 0, 0.25);
+
+        &:focus {
+            outline: 3px solid $player2-color;
+        }
+
+        &--code {
+            text-transform: none;
+        }
+    }
+
+}

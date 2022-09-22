@@ -1,0 +1,25 @@
+@use '../../styles/partials/variables' as *;
+
+.basic-header {
+    padding: 0.68rem 0.68rem 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.56rem;
+
+    &__back {
+        padding: 0;
+        background-color: $primary-light;
+        font-size: 0.75rem;
+        font-weight: $medium;
+        text-transform: uppercase;
+        border: none;
+        position: absolute;
+        left: 0.68rem;
+    }
+
+    &__text {
+        font-size: 1.63rem;
+        font-weight: $extra-bold;
+    }
+}
