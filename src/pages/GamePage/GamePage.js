@@ -87,7 +87,7 @@ function GamePage({ socket, username }) {
     return (
 
         <div className='game-page'>
-            <h1>Hi {username}</h1>
+            <h1 className='game-page__header'>Hi {username}</h1>
             <GameBoard 
                 roomId={roomId}
                 board={board}
