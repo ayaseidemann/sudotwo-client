@@ -37,18 +37,16 @@ function GamePage({ socket, username }) {
         }
     }
 
-    // get game page from socket if room already created
-
     // create board on page load
     useEffect(() => {
         getBoard();
     }, []);
 
-    useEffect(() => {
-        socket.on('create-board', game => {
-            console.log('game received from the server: ', game);
-        })
-    }, [socket])
+    // useEffect(() => {
+    //     socket.on('create-board', game => {
+    //         console.log('game received from the server: ', game);
+    //     })
+    // }, [socket])
 
     // updates the emoji board when we input an emoji
     function updateSelectedEmoji(emojiString) {
@@ -66,8 +64,7 @@ function GamePage({ socket, username }) {
     // click handler for number or delete buttons 
     function clickButton(event) {
         // setInputVal(event.target.innerText);
-        // if the button is 'X' set value of selected tile to blank
-        // otherwise keep it the button's value
+        // if the button is 'X' set value of selected tile to blank, otherwise keep it the button's value
         const tmpBoard = [...board];
         const newValue = event.target.innerText === 'X' ? '' : event.target.innerText;
         // if the value, is now blank, make sure the corresponding emoji is deleted
@@ -98,6 +95,7 @@ function GamePage({ socket, username }) {
                 setSelectedTile={setSelectedTile}
                 selectedTile={selectedTile}
                 emojiBoard={emojiBoard}
+                socket={socket}
             />
             <div className='buttons-wrapper'>
                 <div className='buttons__values'>
