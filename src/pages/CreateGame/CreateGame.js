@@ -15,8 +15,8 @@ function CreateGame({ socket, setUsername }) {
         const roomId = uid();
         setUsername(event.target.name.value);
         await axios.get(`http://localhost:8080/setup-game/${roomId}`);
-        console.log('joining room: ', roomId);
-        socket.emit('join-room', roomId);
+        console.log('joining room:', roomId);
+        await socket.emit('join-room', roomId);
         navigate(`/game/${roomId}`);
     }
 

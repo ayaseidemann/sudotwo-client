@@ -1,19 +1,21 @@
 import './GameBoard.scss';
 import BoardRow from '../BoardRow/BoardRow';
 
-function GameBoard({ roomId, board, solution, setSelectedTile, selectedTile,emojiBoard }) {
+function GameBoard({ roomId, board, solution, setSelectedTile, selectedTile,emojiBoard, socket }) {
 
     return (
         <div className='game-board'>
             {board.map((rowData, i) => {
                 return(
                         <BoardRow 
+                            roomId={roomId}
                             rowNum={i+1} 
                             rowData={rowData} 
                             solution={solution[i]}
                             setSelectedTile={setSelectedTile}
                             selectedTile={selectedTile}
                             emojiBoard={emojiBoard}
+                            socket={socket}
                         />
                 )
             })}
