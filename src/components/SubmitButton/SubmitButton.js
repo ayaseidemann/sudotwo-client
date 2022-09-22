@@ -1,9 +1,9 @@
 import './SubmitButton.scss';
 
-function SubmitButton({ clickHandler, text }) {
+function SubmitButton({ clickButton, text }) {
 
     return(
-        <button onClick={clickHandler}>{text}</button>
+        <button onClick={clickButton}>{text}</button>
     )
 }
 
