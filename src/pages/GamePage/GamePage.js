@@ -3,11 +3,13 @@ import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { io } from 'socket.io-client';
+import axios from 'axios';
 
 
-function GamePage({ socket, username }) {
+function GamePage({ username }) {
+
+    let socket = io.connect(`http://localhost:8080`);
 
     const { roomId } = useParams();
 
@@ -39,7 +41,24 @@ function GamePage({ socket, username }) {
 
     // create board on page load
     useEffect(() => {
+        console.log('component mounted');
+
+        socket.emit('join-room', roomId);
+        socket.on("connect_error", (err) => {
+            console.log(`connect_error due to ${err.message}`);
+        });
         getBoard();
+    }, []);
+
+    function receiveTile() {
+        socket.on('receive-tile', tileCoords => {
+            console.log('other user selected tile', tileCoords);
+        });
+        // console.log("in receive tile useEffect");
+    };
+
+    useEffect(() => {
+        receiveTile();
     }, []);
 
     // useEffect(() => {

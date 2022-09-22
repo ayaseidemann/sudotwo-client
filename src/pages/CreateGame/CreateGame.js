@@ -7,7 +7,7 @@ import BasicHeader from '../../components/BasicHeader/BasicHeader';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 
 
-function CreateGame({ socket, setUsername }) {
+function CreateGame({ setUsername }) {
 
     const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ function CreateGame({ socket, setUsername }) {
         // setup game in server with given room id
         await axios.get(`http://localhost:8080/setup-game/${roomId}`);
         console.log('joining room:', roomId);
-        await socket.emit('join-room', roomId);
         // navigate to Game Page for that room
         navigate(`/game/${roomId}`);
     }
