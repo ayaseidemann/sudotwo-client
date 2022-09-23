@@ -31,7 +31,7 @@ function CreateGame({ setUsername }) {
         const roomId = uid();
         setUsername(event.target.name.value);
         // setup game in server with given room id
-        await axios.get(`http://localhost:8080/setup-game/${roomId}`);
+        await axios.get(`http://chookie.local:8080/setup-game/${roomId}`);
         console.log('joining room:', roomId);
         // navigate to Game Page for that room
         navigate(`/game/${roomId}`);

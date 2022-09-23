@@ -2,15 +2,18 @@ import './BoardTile.scss';
 import { useEffect, useState } from 'react';
 
 
-function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, selectedTile, emojiBoard, socket }) {
-
-    const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
+function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, selectedTile, otherUserSelectedTile, emojiBoard, socket }) {
 
     const xSectionNum = Math.ceil(colNum / 3);
 
-    // if selected row and column match this tile's row and column, give class name selected
+    // if selected row and column match this tile's row and column, give class selected
     const selectedClass = selectedTile[0] === rowNum - 1 && selectedTile[1] === colNum - 1
         ? "selected"
+        : "";
+
+    // if other user selected row and column match this tile's row and column, give class name other selected
+    const otherSelectedClass = otherUserSelectedTile[0] === rowNum - 1 && otherUserSelectedTile[1] === colNum - 1
+        ? "other-selected"
         : "";
 
     // if the value is 0 set the tile to be blank
@@ -23,6 +26,7 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
     // click event updating selected tile to the clicked tile
     function clickTile(event) {
         event.preventDefault();
+        if (otherSelectedClass !== '') {return};
         setSelectedTile([rowNum - 1, colNum - 1]);
         socket.emit('tile-selected', 
             {
@@ -30,10 +34,6 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
                 tileCoords: [rowNum - 1, colNum - 1]
             })
     }
-
-    useEffect(()=>{
-        console.log('tile mounted');
-    },[]);
 
     return (
         <>
@@ -53,7 +53,7 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
                     key={`${rowNum}${colNum}`}
                     row={rowNum}
                     column={colNum}
-                    className={`tile col-${colNum} x-section-${xSectionNum} ${selectedClass}`}
+                    className={`tile col-${colNum} x-section-${xSectionNum} ${selectedClass}  ${otherSelectedClass} `}
                     solution={solution}
                     onClick={clickTile}
                 >{text}
@@ -65,45 +65,3 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
 }
 
 export default BoardTile;
-
-{/* <>
-{!blank &&
-    <input 
-    key={`${rowNum}${colNum}`}
-    row={rowNum}
-    column={colNum}
-    className={`tile col-${colNum} x-section-${xSectionNum}`} 
-    solution={solution}
-    placeholder={val}
-    disabled
-    />
-}
-
-{blank &&
-    <input
-    key={`${rowNum}${colNum}`} 
-    row={rowNum}
-    column={colNum}
-    className={`tile col-${colNum} x-section-${xSectionNum}`} 
-    placeholder={!blank ? {val} : " "}
-    maxLength={1}
-    solution={solution}
-    onClick={clickTile}
-    onBlur={focusAway}
-    />
-}
-</> */}
-
-{/* if the value is a string that means it has been inputed by a user
-                and should remain editable */}
-{/* {typeof val === 'string' &&
-                    <div
-                        key={`${rowNum}${colNum}`} 
-                        row={rowNum}
-                        column={colNum}
-                        className={`tile col-${colNum} x-section-${xSectionNum} ${selectedClass}`} 
-                        solution={solution}
-                        onClick={clickTile}
-                    >{val}
-                    </div>
-                } */}

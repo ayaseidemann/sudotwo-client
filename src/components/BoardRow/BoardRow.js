@@ -1,7 +1,7 @@
 import './BoardRow.scss';
 import BoardTile from '../BoardTile/BoardTile';
 
-function BoardRow({ roomId, rowNum, rowData, solution, setSelectedTile, selectedTile, emojiBoard, socket }) {
+function BoardRow({ roomId, rowNum, rowData, solution, setSelectedTile, selectedTile, otherUserSelectedTile, emojiBoard, socket }) {
 
     const ySectionNum = Math.ceil(rowNum / 3);
 
@@ -17,6 +17,7 @@ function BoardRow({ roomId, rowNum, rowData, solution, setSelectedTile, selected
                         solution={solution[i]}
                         setSelectedTile={setSelectedTile}
                         selectedTile={selectedTile}
+                        otherUserSelectedTile={otherUserSelectedTile}
                         emojiBoard={emojiBoard}
                         socket={socket}
                     />
@@ -27,26 +28,3 @@ function BoardRow({ roomId, rowNum, rowData, solution, setSelectedTile, selected
 }
 
 export default BoardRow;
-
-
-
-// return(
-//     <>
-//         {inputVal &&
-//             <BoardTile 
-//                 rowNum={rowNum} 
-//                 colNum={i+1} 
-//                 val={inputVal} 
-//                 solution={solution[i]}
-//             />
-//         }
-//         {!inputVal &&
-//             <BoardTile 
-//                 rowNum={rowNum} 
-//                 colNum={i+1} 
-//                 val={val} 
-//                 solution={solution[i]}
-//             />
-//         }
-//     </>
-// )
