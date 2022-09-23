@@ -6,10 +6,9 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 
+const socket = io.connect(`http://localhost:8080`);
 
 function GamePage({ username }) {
-
-    let socket = io.connect(`http://localhost:8080`);
 
     const { roomId } = useParams();
 
@@ -54,7 +53,6 @@ function GamePage({ username }) {
         socket.on('receive-tile', tileCoords => {
             console.log('other user selected tile', tileCoords);
         });
-        // console.log("in receive tile useEffect");
     };
 
     useEffect(() => {
