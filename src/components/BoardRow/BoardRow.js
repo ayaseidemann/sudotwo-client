@@ -1,25 +1,20 @@
 import './BoardRow.scss';
 import BoardTile from '../BoardTile/BoardTile';
 
-function BoardRow({ roomId, rowNum, rowData, solution, setSelectedTile, selectedTile, otherUserSelectedTile, emojiBoard, socket }) {
+function BoardRow(props) {
 
-    const ySectionNum = Math.ceil(rowNum / 3);
+    const ySectionNum = Math.ceil(props.rowNum / 3);
 
     return (
-        <div key={rowNum} className={`row row-${rowNum} y-section-${ySectionNum}`}>
-            {rowData.map((val, i) => {
+        <div key={props.rowNum} className={`row row-${props.rowNum} y-section-${ySectionNum}`}>
+            {props.rowData.map((val, i) => {
                 return(
                     <BoardTile 
-                        roomId={roomId}
-                        rowNum={rowNum} 
                         colNum={i+1} 
+                        rowNum={props.rowNum}
                         val={val} 
-                        solution={solution[i]}
-                        setSelectedTile={setSelectedTile}
-                        selectedTile={selectedTile}
-                        otherUserSelectedTile={otherUserSelectedTile}
-                        emojiBoard={emojiBoard}
-                        socket={socket}
+                        tileSolution={props.rowSolution[i]}
+                        {...props}
                     />
                 )
             })}

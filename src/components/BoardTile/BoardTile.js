@@ -2,37 +2,52 @@ import './BoardTile.scss';
 import { useEffect, useState } from 'react';
 
 
-function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, selectedTile, otherUserSelectedTile, emojiBoard, socket }) {
+function BoardTile(props) {
 
-    const xSectionNum = Math.ceil(colNum / 3);
+    // console.log(props.board);
+
+    const xSectionNum = Math.ceil(props.colNum / 3);
+
+    // if the value is 0 set the tile to be blank
+    let text = props.val === 0 ? "" : props.val;
 
     // if selected row and column match this tile's row and column, give class selected
-    const selectedClass = selectedTile[0] === rowNum - 1 && selectedTile[1] === colNum - 1
-        ? "selected"
+    const selectedClass = props.selectedTile[0] === props.rowNum - 1 && props.selectedTile[1] === props.colNum - 1
+        ? "selected" 
         : "";
 
     // if other user selected row and column match this tile's row and column, give class name other selected
-    const otherSelectedClass = otherUserSelectedTile[0] === rowNum - 1 && otherUserSelectedTile[1] === colNum - 1
-        ? "other-selected"
-        : "";
+    let otherSelectedClass = ""
+    if (props.otherUserSelectedTile[0] === props.rowNum - 1 && props.otherUserSelectedTile[1] === props.colNum - 1) {
+        otherSelectedClass = "other-selected"
+        if (props.otherUserTileValue !== "") {
+            text = props.otherUserTileValue;
+            const tmpBoard = [...props.board];
+            tmpBoard[props.rowNum - 1][props.colNum -1] =  text;
+            props.setBoard(tmpBoard);
+            return;
+        }
+    }
 
-    // if the value is 0 set the tile to be blank
-    const text = val === 0 ? "" : val;
+    // const otherSelectedClass = props.otherUserSelectedTile[0] === props.rowNum - 1 && props.otherUserSelectedTile[1] === props.colNum - 1
+    //     ? "other-selected"
+    //     : "";
 
-    const emoji = emojiBoard[rowNum - 1][colNum -1]
-        ? emojiBoard[rowNum - 1][colNum -1]
+    const emoji = props.emojiBoard && props.emojiBoard[props.rowNum - 1][props.colNum -1]
+        ? props.emojiBoard[props.rowNum - 1][props.colNum -1]
         : '';
     
     // click event updating selected tile to the clicked tile
     function clickTile(event) {
         event.preventDefault();
-        if (otherSelectedClass !== '') {return};
-        setSelectedTile([rowNum - 1, colNum - 1]);
-        socket.emit('tile-selected', 
+        if (otherSelectedClass === '') {
+        props.setSelectedTile([props.rowNum - 1, props.colNum - 1]);
+        props.socket.emit('tile-selected', 
             {
-                roomId: roomId,
-                tileCoords: [rowNum - 1, colNum - 1]
+                roomId: props.roomId,
+                tileCoords: [props.rowNum - 1, props.colNum - 1]
             })
+        }
     }
 
     return (
@@ -41,20 +56,31 @@ function BoardTile({ roomId, rowNum, colNum, val, solution, setSelectedTile, sel
                 from the server and should not have a click handler and display the value
                 otherwise, the div should have a click handler and display text (set above)
                 and the emoji if there is one */}
-            {typeof val === 'number' && val !== 0 ?
+            {typeof props.val === 'number' && props.val !== 0 ?
                 <div
-                    key={`${rowNum}${colNum}`}
-                    row={rowNum}
-                    column={colNum}
-                    className={`tile col-${colNum} x-section-${xSectionNum} locked`}
-                >{val}
+                    key={`${props.rowNum}${props.colNum}`}
+                    row={props.rowNum}
+                    column={props.colNum}
+                    className={`tile col-${props.colNum} x-section-${xSectionNum} locked`}
+                >{props.val}
                 </div> :
+            // props.otherUserTileValue !== "" ?
+            // <div
+            //     key={`${props.rowNum}${props.colNum}`}
+            //     row={props.rowNum}
+            //     column={props.colNum}
+            //     className={`tile col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
+            //     solution={props.solutionTile}
+            //     onClick={clickTile}
+            // >{props.otherUserTileValue}
+            //     <div className='reaction'>{emoji}</div> 
+            // </div> :
                 <div
-                    key={`${rowNum}${colNum}`}
-                    row={rowNum}
-                    column={colNum}
-                    className={`tile col-${colNum} x-section-${xSectionNum} ${selectedClass}  ${otherSelectedClass} `}
-                    solution={solution}
+                    key={`${props.rowNum}${props.colNum}`}
+                    row={props.rowNum}
+                    column={props.colNum}
+                    className={`tile col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
+                    solution={props.solutionTile}
                     onClick={clickTile}
                 >{text}
                     <div className='reaction'>{emoji}</div>
