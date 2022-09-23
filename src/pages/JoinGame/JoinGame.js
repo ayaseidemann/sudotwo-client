@@ -11,9 +11,11 @@ function JoinGame({ setUsername }) {
 
     const navigate = useNavigate();
 
+    // set state for input validation
     const [nameFilled, setNameFilled] = useState(false);
     const [codeFilled, setcodeFilled] = useState(false);
 
+    // if name input is not blank set filled to true
     function nameInputChange(event) {
         if (event.target.value) {
             setNameFilled(true);
@@ -22,6 +24,7 @@ function JoinGame({ setUsername }) {
         }
     }
 
+    // if code input is > 5 characters set filled to true
     function codeInputChange(event) {
         if (event.target.value.length === 5) {
             setcodeFilled(true);
@@ -30,12 +33,14 @@ function JoinGame({ setUsername }) {
         }
     }
 
+    // check if room Id exists in all room Ids from JSON
     const doesRoomExist =  async (roomId) => {
-        const { data: rooms } = await axios.get(`http://localhost:8080/all-games`);
+        const { data: rooms } = await axios.get(`http://chookie.local:8080/all-games`);
         const roomToJoin = rooms.find(room => room.roomId === roomId);
         return (roomToJoin ? true : false);
     }
 
+    // on form submit navigate to game room based on input room code
     const joinExistingRoom = async (event) => {
         event.preventDefault();
         const roomId = event.target.roomId.value;
@@ -61,7 +66,7 @@ function JoinGame({ setUsername }) {
                         type='text'
                         name='name'
                         maxLength='12'
-                    onChange={nameInputChange}
+                        onChange={nameInputChange}
                     />
                 </label>
                 <label className='join-game__label'>
@@ -71,7 +76,7 @@ function JoinGame({ setUsername }) {
                         type='text'
                         name='roomId'
                         maxLength='5'
-                    onChange={codeInputChange}
+                        onChange={codeInputChange}
                     />
                 </label>
                 <SubmitButton 

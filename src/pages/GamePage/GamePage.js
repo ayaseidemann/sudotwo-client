@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 
-const socket = io.connect(`http://localhost:8080`);
+const socket = io.connect(`http://chookie.local:8080`);
 
 function GamePage({ username }) {
 
@@ -17,6 +17,7 @@ function GamePage({ username }) {
     const [solution, setSolution] = useState([]);
     // const [inputVal, setInputVal] = useState('');
     const [selectedTile, setSelectedTile] = useState([]);
+    const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
     const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
 
     // lists of input buttons
@@ -26,7 +27,7 @@ function GamePage({ username }) {
     // get board, roomId, and solution from server json
     async function getBoard() {
         try {
-            const { data: axiosGame } = await axios.get(`http://localhost:8080/read-game/${roomId}`);
+            const { data: axiosGame } = await axios.get(`http://chookie.local:8080/read-game/${roomId}`);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
 
@@ -49,9 +50,11 @@ function GamePage({ username }) {
         getBoard();
     }, []);
 
+    // function to run on socket receiving tile
     function receiveTile() {
         socket.on('receive-tile', tileCoords => {
-            console.log('other user selected tile', tileCoords);
+            // console.log('other user selected tile', tileCoords);
+            setOtherUserSelectedTile(tileCoords);
         });
     };
 
@@ -112,6 +115,7 @@ function GamePage({ username }) {
                 setSelectedTile={setSelectedTile}
                 selectedTile={selectedTile}
                 emojiBoard={emojiBoard}
+                otherUserSelectedTile={otherUserSelectedTile}
                 socket={socket}
             />
             <div className='buttons-wrapper'>
