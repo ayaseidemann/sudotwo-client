@@ -41,8 +41,6 @@ function GamePage({ username }) {
 
     // create board on page load
     useEffect(() => {
-        console.log('component mounted');
-
         socket.emit('join-room', roomId);
         socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);

@@ -28,8 +28,8 @@
     }
 
     &--inactive {
-        background-color: $inactive-background;
-        color: $inactive-color;
+        background-color: $inactive-dark;
+        color: $inactive-light;
         box-shadow: none;
     }
 }
