@@ -18,11 +18,15 @@ function GamePage({ username }) {
     // const [inputVal, setInputVal] = useState('');
     const [selectedTile, setSelectedTile] = useState([]);
     const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
+    const [otherUserTileValue, setOtherUserTileValue] = useState("");
     const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
 
     // lists of input buttons
     const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X'];
     const emojiList = ['🤔', '👍'];
+
+    console.log(board);
+
     
     // get board, roomId, and solution from server json
     async function getBoard() {
@@ -32,7 +36,7 @@ function GamePage({ username }) {
             setSolution(axiosGame.solution);
 
             // emit board to socket for second user
-            socket.emit('create-game', axiosGame);
+            // socket.emit('create-game', axiosGame);
         }
         catch(err) {
             console.log(err);
@@ -41,8 +45,6 @@ function GamePage({ username }) {
 
     // create board on page load
     useEffect(() => {
-        console.log('component mounted');
-
         socket.emit('join-room', roomId);
         socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
@@ -53,7 +55,6 @@ function GamePage({ username }) {
     // function to run on socket receiving tile
     function receiveTile() {
         socket.on('receive-tile', tileCoords => {
-            // console.log('other user selected tile', tileCoords);
             setOtherUserSelectedTile(tileCoords);
         });
     };
@@ -61,6 +62,17 @@ function GamePage({ username }) {
     useEffect(() => {
         receiveTile();
     }, []);
+
+    // function to run on socket receive tile change, set board to board updated by other user
+    function receiveTileChange() {
+        socket.on('receive-tile-change', otherBoard => {
+            setBoard(otherBoard);
+        })
+    }
+
+    useEffect(() => {
+        receiveTileChange();
+    }, [])
 
     // useEffect(() => {
     //     socket.on('create-board', game => {
@@ -86,7 +98,7 @@ function GamePage({ username }) {
         // setInputVal(event.target.innerText);
         // if the button is 'X' set value of selected tile to blank, otherwise keep it the button's value
         const tmpBoard = [...board];
-        const newValue = event.target.innerText === 'X' ? '' : event.target.innerText;
+        const newValue = event.target.innerText === 'X' ? 0 : event.target.innerText;
         // if the value, is now blank, make sure the corresponding emoji is deleted
         if (newValue === '') {
             updateSelectedEmoji('');
@@ -96,7 +108,13 @@ function GamePage({ username }) {
         setBoard(tmpBoard);
 
         // emit to socket when a change is made
-        socket.emit('tile-change', newValue);
+        socket.emit('tile-change', 
+            {
+                roomId: roomId,
+                board: board
+                // tileCoords: selectedTile,
+                // value: newValue
+            });
     }
 
     // click handler for emoji buttons
@@ -111,11 +129,13 @@ function GamePage({ username }) {
             <GameBoard 
                 roomId={roomId}
                 board={board}
+                setBoard={setBoard}
                 solution={solution}
                 setSelectedTile={setSelectedTile}
                 selectedTile={selectedTile}
                 emojiBoard={emojiBoard}
                 otherUserSelectedTile={otherUserSelectedTile}
+                otherUserTileValue={otherUserTileValue}
                 socket={socket}
             />
             <div className='buttons-wrapper'>
