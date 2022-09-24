@@ -1,13 +1,13 @@
 
 import './JoinGame.scss';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import BasicHeader from '../../components/BasicHeader/BasicHeader';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 
 
-function JoinGame({ setUsername }) {
+function JoinGame(props) {
 
     const navigate = useNavigate();
 
@@ -46,14 +46,27 @@ function JoinGame({ setUsername }) {
         const roomId = event.target.roomId.value;
         const roomExists = await doesRoomExist(roomId);
         if (roomExists) {
-            setUsername(event.target.name.value);
-            console.log('joining room:', roomId);
-            navigate(`/game/${roomId}`);
+            props.setUsername(event.target.name.value);
+            props.socket.emit('join-room', roomId);
         } else {
             alert("this isn't a room dummy");
-            event.target.roomId.value = '';
+            // event.target.roomId.value = '';
         }
     }
+
+    // on receiving socket go-to-to, nav to game page
+    function startGame() {
+        props.socket.on('go-to-game', roomId => {
+            navigate(`/game/${roomId}`);
+        })
+        props.socket.on('no-entry', roomId => {
+            alert('sorry room is full!');
+        })
+    }
+
+    useEffect(() => {
+        startGame();
+    }, []);
 
     return (
         <>

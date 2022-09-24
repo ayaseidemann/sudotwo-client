@@ -1,7 +1,7 @@
 import './CreateGame.scss';
 import ShortUniqueId from 'short-unique-id';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import BasicHeader from '../../components/BasicHeader/BasicHeader';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
@@ -30,20 +30,30 @@ function CreateGame(props) {
         event.preventDefault();
         // generate random 5 digit id
         const uid = new ShortUniqueId({ length: 5 });
-        const tmpRoomId = uid();
-        setRoomId(tmpRoomId);
+        const roomId = uid();
+        setRoomId(roomId);
         props.setUsername(event.target.name.value);
         // setup game in server with given room id
-        await axios.get(`http://chookie.local:8080/setup-game/${tmpRoomId}`);
+        await axios.get(`http://chookie.local:8080/setup-game/${roomId}`);
+        props.socket.emit('join-room', roomId);
+        console.log('joining room:', roomId);
         setWaitingRoom(true);
-        // navigate to Game Page for that room
-        // navigate(`/game/${roomId}`);
     }
-    console.log('waiting room:', waitingRoom);
-    console.log('roomId', roomId)
 
-    // increment number of users
-    props.setNumOfUsers(1);
+    // on receiving socket go-to-to, nav to game page
+    function startGame() {
+        props.socket.on('go-to-game', roomId => {
+            navigate(`/game/${roomId}`);
+        })
+    }
+
+    useEffect(() => {
+        startGame();
+    }, []);
+
+    useEffect(() => {
+        props.socket.on('join-room', roomId);
+    }, []);
 
     return (
         <>
