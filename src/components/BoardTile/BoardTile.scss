@@ -1,21 +1,22 @@
-
+@use '../../styles/partials/variables' as *;
 
 .tile {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2rem;
-    width: 2rem;
-    font-size: 1.5rem;
+    height: 1.94rem;
+    width: 1.94rem;
+    font-size: 1rem;
+    font-weight: $extra-bold;
     position: relative;
 }
 
 .col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {
-    border-right: 1px solid rgba(0, 0, 0, 0.669);
+    border-right: 1px solid $secondary-dark;
 }
 
 .col-3, .col-6 {
-    border-right: 3px solid rgb(255, 170, 0);
+    border-right: 2px solid $primary-dark;
 }
 
 .col-4, .col-7 {
@@ -23,15 +24,17 @@
 }
 
 .row-1, .row-2, .row-4, .row-5, .row-7, .row-8 {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.669);
+    border-bottom: 1px solid $secondary-dark;
 }
 
 .row-3, .row-6 {
-    border-bottom: 3px solid rgb(255, 170, 0);
+    border-bottom: 2px solid $primary-dark;
 }
 
 .selected {
-    background-color: rgba(250, 177, 114, 0.39);
+    border: 1px solid $player1-color;
+    outline: 3px solid $player1-color;
+    z-index: 10;
 }
 
 .other-selected {
@@ -40,7 +43,7 @@
 
 .locked {
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.075);
+    background-color: $secondary-light;
 }
 
 .reaction {

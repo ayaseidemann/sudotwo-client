@@ -1,8 +1,12 @@
+@use '../../styles/partials/variables' as *;
 
 .selector-button {
-    height: 40px;
-    width: 40px;
+    color: $player1-color;
+    font-size: 1rem;
+    font-weight: $extra-bold;
+    height: 2.5rem;
+    width: 3.2rem;
     background-color: transparent;
-    border: 1px solid black;
-    margin: 5px;
+    border: 2px solid black;
+    box-shadow: inset 0px -3px 0px $player1-color;
 }

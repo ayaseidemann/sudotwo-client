@@ -1,6 +1,7 @@
 import './GamePage.scss';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
+import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // import { io } from 'socket.io-client';
@@ -22,8 +23,9 @@ function GamePage(props) {
     const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
 
     // lists of input buttons
-    const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X'];
-    const emojiList = ['🤔', '👍'];
+    const buttonsRow1 = [1, 2, 3, 4, 5];
+    const buttonsRow2 = [ 6, 7, 8, 9, 'X'];
+    // const emojiList = ['🤔', '👍'];
     
     // get board, roomId, and solution from server json
     async function getBoard() {
@@ -117,10 +119,35 @@ function GamePage(props) {
         updateSelectedEmoji(event.target.innerText);
     }
 
+    function leaveClick(event) {
+
+    }
+
+    function revealClick(event) {
+        
+    }
+
+    function submitClick() {
+
+    }
+
     return (
 
         <div className='game-page'>
-            <h1 className='game-page__header'>Hi {props.username}</h1>
+            <header className='game-page__header'>
+                <button className='game-page__leave' onClick={leaveClick}>
+                    <img className='game-page__leave-icon' src='' alt=''/>
+                    Leave
+                </button>
+                <div className='game-page__text'>
+                    <h1 className='game-page__logo'>Sudo<span className='game-page__logo-span'>two</span>!</h1>
+                    <p className='game-page__subheader'>with <span className='game-page__subheader-span'>other player</span> | timer</p>
+                </div>
+                <button className='game-page__reveal' onClick={revealClick}>
+                    <img className='game-page__reveal-icon' src='' alt=''/>
+                    Reveal
+                </button>
+            </header>
             <GameBoard 
                 roomId={roomId}
                 board={board}
@@ -133,20 +160,25 @@ function GamePage(props) {
                 otherUserTileValue={otherUserTileValue}
                 socket={props.socket}
             />
-            <div className='buttons-wrapper'>
-                <div className='buttons__values'>
-                    {buttonList.map(btn => {
+            <div className='buttons__wrapper'>
+                <div className='buttons__row buttons__row--1'>
+                    {buttonsRow1.map(btn => {
                         return(
                             <SelectorButton text={btn} clickButton={clickButton} />
                         )
                     })}
                 </div>
-                <div className='buttons__emojis'>
-                    {emojiList.map(btn => {
+                <div className='buttons__row buttons__row--2'>
+                    {buttonsRow2.map(btn => {
                         return(
-                            <SelectorButton text={btn} clickButton={emojiClickButton} />
+                            <SelectorButton text={btn} clickButton={clickButton} />
                         )
                     })}
+                </div>
+                <div className='buttons__row buttons__row--reactions'>
+                    <button className='buttons__reaction buttons__reaction--emoji' onClick={clickButton}>🤔</button>
+                    <button className='buttons__reaction buttons__reaction--emoji' onClick={clickButton}>👍</button>
+                    <button className='buttons__reaction buttons__reaction--submit' onClick={submitClick}>Submit game</button>
                 </div>
             </div>
         </div>
