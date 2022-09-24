@@ -3,12 +3,12 @@ import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import axios from 'axios';
 
-const socket = io.connect(`http://chookie.local:8080`);
+// const socket = io.connect(`http://chookie.local:8080`);
 
-function GamePage({ username }) {
+function GamePage(props) {
 
     const { roomId } = useParams();
 
@@ -24,9 +24,6 @@ function GamePage({ username }) {
     // lists of input buttons
     const buttonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'X'];
     const emojiList = ['🤔', '👍'];
-
-    console.log(board);
-
     
     // get board, roomId, and solution from server json
     async function getBoard() {
@@ -45,8 +42,8 @@ function GamePage({ username }) {
 
     // create board on page load
     useEffect(() => {
-        socket.emit('join-room', roomId);
-        socket.on("connect_error", (err) => {
+        // props.socket.emit('join-room', roomId);
+        props.socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
         });
         getBoard();
@@ -54,7 +51,7 @@ function GamePage({ username }) {
 
     // function to run on socket receiving tile
     function receiveTile() {
-        socket.on('receive-tile', tileCoords => {
+        props.socket.on('receive-tile', tileCoords => {
             setOtherUserSelectedTile(tileCoords);
         });
     };
@@ -65,7 +62,7 @@ function GamePage({ username }) {
 
     // function to run on socket receive tile change, set board to board updated by other user
     function receiveTileChange() {
-        socket.on('receive-tile-change', otherBoard => {
+        props.socket.on('receive-tile-change', otherBoard => {
             setBoard(otherBoard);
         })
     }
@@ -108,12 +105,10 @@ function GamePage({ username }) {
         setBoard(tmpBoard);
 
         // emit to socket when a change is made
-        socket.emit('tile-change', 
+        props.socket.emit('tile-change', 
             {
                 roomId: roomId,
                 board: board
-                // tileCoords: selectedTile,
-                // value: newValue
             });
     }
 
@@ -125,7 +120,7 @@ function GamePage({ username }) {
     return (
 
         <div className='game-page'>
-            <h1 className='game-page__header'>Hi {username}</h1>
+            <h1 className='game-page__header'>Hi {props.username}</h1>
             <GameBoard 
                 roomId={roomId}
                 board={board}
@@ -136,7 +131,7 @@ function GamePage({ username }) {
                 emojiBoard={emojiBoard}
                 otherUserSelectedTile={otherUserSelectedTile}
                 otherUserTileValue={otherUserTileValue}
-                socket={socket}
+                socket={props.socket}
             />
             <div className='buttons-wrapper'>
                 <div className='buttons__values'>
