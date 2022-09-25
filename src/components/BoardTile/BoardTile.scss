@@ -9,6 +9,14 @@
     font-size: 1rem;
     font-weight: $extra-bold;
     position: relative;
+
+    &--1 {
+        color: $player1-color;
+    }
+
+    &--2 {
+        color: $player2-color;
+    }
 }
 
 .col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {
@@ -32,14 +40,32 @@
 }
 
 .selected {
-    border: 1px solid $player1-color;
-    outline: 3px solid $player1-color;
     z-index: 10;
+
+    &--1 {
+        border: 1px solid $player1-color;
+        outline: 3px solid $player1-color;
+    }
+
+    &--2 {
+        border: 1px solid $player2-color;
+        outline: 3px solid $player2-color;
+    }
 }
 
 .other-selected {
-    background-color: red;
-}
+    z-index: 10;
+
+
+    &--1 {
+        border: 1px solid $player1-color;
+        outline: 3px solid $player1-color;
+    }
+
+    &--2 {
+        border: 1px solid $player2-color;
+        outline: 3px solid $player2-color;
+    }}
 
 .locked {
     font-weight: bold;

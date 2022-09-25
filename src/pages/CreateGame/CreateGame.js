@@ -24,15 +24,14 @@ function CreateGame(props) {
             setIsButtonActive(false);
         }
     }
-
     // function to create new game and navigate to it
     async function createRoom(event) {
         event.preventDefault();
         // generate random 5 digit id
         const uid = new ShortUniqueId({ length: 5 });
-        const roomId = uid();
+        const roomId = uid().toUpperCase();
         setRoomId(roomId);
-        props.setUsername(event.target.name.value);
+        props.setMyName(event.target.name.value);
         // setup game in server with given room id
         await axios.get(`http://chookie.local:8080/setup-game/${roomId}`);
         props.socket.emit('join-room', roomId);
@@ -43,6 +42,7 @@ function CreateGame(props) {
     // on receiving socket go-to-to, nav to game page
     function startGame() {
         props.socket.on('go-to-game', roomId => {
+            props.setPlayerNum(1);
             navigate(`/game/${roomId}`);
         })
     }
@@ -86,7 +86,7 @@ function CreateGame(props) {
                                 className='create-game__input create-game__input--locked'
                                 type='text'
                                 name='name'
-                                placeholder={props.username}
+                                placeholder={props.myName}
                             />
                         </label>
                     </form>

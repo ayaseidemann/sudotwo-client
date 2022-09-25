@@ -4,22 +4,22 @@ import { useEffect, useState } from 'react';
 
 function BoardTile(props) {
 
-    // console.log(props.board);
-
     const xSectionNum = Math.ceil(props.colNum / 3);
+
+    const otherPlayerNum = props.playerNum === 1 ? 2 : 1;
 
     // if the value is 0 set the tile to be blank
     let text = props.val === 0 ? "" : props.val;
 
     // if selected row and column match this tile's row and column, give class selected
     const selectedClass = props.selectedTile[0] === props.rowNum - 1 && props.selectedTile[1] === props.colNum - 1
-        ? "selected" 
+        ? `selected selected--${props.playerNum}`
         : "";
 
     // if other user selected row and column match this tile's row and column, give class name other selected
     let otherSelectedClass = ""
     if (props.otherUserSelectedTile[0] === props.rowNum - 1 && props.otherUserSelectedTile[1] === props.colNum - 1) {
-        otherSelectedClass = "other-selected"
+        otherSelectedClass = `other-selected other-selected--${otherPlayerNum}`
         if (props.otherUserTileValue !== "") {
             text = props.otherUserTileValue;
             const tmpBoard = [...props.board];
@@ -79,7 +79,7 @@ function BoardTile(props) {
                     key={`${props.rowNum}${props.colNum}`}
                     row={props.rowNum}
                     column={props.colNum}
-                    className={`tile col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
+                    className={`tile tile--${props.playerNum} col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
                     solution={props.solutionTile}
                     onClick={clickTile}
                 >{text}
