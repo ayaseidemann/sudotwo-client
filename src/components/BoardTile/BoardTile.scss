@@ -19,6 +19,16 @@
     }
 }
 
+.user {
+    &--1 {
+        color: $player1-color;
+    }
+
+    &--2 {
+        color: $player2-color;
+    }
+}
+
 .col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {
     border-right: 1px solid $secondary-dark;
 }

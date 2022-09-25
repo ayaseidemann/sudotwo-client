@@ -13,11 +13,12 @@ function GamePage(props) {
     // set state for variables that change
     const [board, setBoard] = useState([]);
     const [solution, setSolution] = useState([]);
+    const [inputBoard, setInputBoard] = useState([]);
     // const [inputVal, setInputVal] = useState('');
+    const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
     const [selectedTile, setSelectedTile] = useState([]);
     const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
     const [otherUserTileValue, setOtherUserTileValue] = useState("");
-    const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
 
     // lists of input buttons
     const buttonsRow1 = [1, 2, 3, 4, 5];
@@ -33,7 +34,20 @@ function GamePage(props) {
             setSolution(axiosGame.solution);
             // send username to socket
             props.socket.emit('send-name', { roomId : roomId, sendName : props.myName });
-
+            // set up input board, 0 - from API, 1 - player 1 input, 2 - player 2 input
+            let tmpInputBoard = [[],[],[],[],[],[],[],[],[]];
+            axiosGame.board.map((row, i) => {
+                row.map((tile, j) => {
+                    if (axiosGame.board[i][j] !== 0) {
+                        tmpInputBoard[i][j] = 0;
+                    } 
+                    else {
+                        tmpInputBoard[i][j] = '-';
+                    }
+                })
+            });
+            console.log(tmpInputBoard);
+            setInputBoard(tmpInputBoard);
             // emit board to socket for second user
             // socket.emit('create-game', axiosGame);
         }
@@ -70,8 +84,9 @@ function GamePage(props) {
 
     // function to run on socket receive tile change, set board to board updated by other user
     function receiveTileChange() {
-        props.socket.on('receive-tile-change', otherBoard => {
-            setBoard(otherBoard);
+        props.socket.on('receive-tile-change', data => {
+            setBoard(data.board);
+            setInputBoard(data.inputBoard);
         })
     }
 
@@ -112,12 +127,18 @@ function GamePage(props) {
         tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
         console.log(tmpBoard);
         setBoard(tmpBoard);
+        // update input board to player's number in the position of the updated tile
+        const tmpInputBoard = [...inputBoard];
+        tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum;
+        console.log(tmpInputBoard);
+        setInputBoard(tmpInputBoard);
 
         // emit to socket when a change is made
         props.socket.emit('tile-change', 
             {
                 roomId: roomId,
-                board: board
+                board: board,
+                inputBoard: inputBoard
             });
     }
 
@@ -164,6 +185,7 @@ function GamePage(props) {
                 setSelectedTile={setSelectedTile}
                 selectedTile={selectedTile}
                 emojiBoard={emojiBoard}
+                inputBoard={inputBoard}
                 otherUserSelectedTile={otherUserSelectedTile}
                 otherUserTileValue={otherUserTileValue}
                 socket={props.socket}
