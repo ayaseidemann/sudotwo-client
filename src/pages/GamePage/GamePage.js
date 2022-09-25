@@ -1,13 +1,10 @@
 import './GamePage.scss';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
-import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import { io } from 'socket.io-client';
 import axios from 'axios';
 
-// const socket = io.connect(`http://chookie.local:8080`);
 
 function GamePage(props) {
 
@@ -25,7 +22,8 @@ function GamePage(props) {
     // lists of input buttons
     const buttonsRow1 = [1, 2, 3, 4, 5];
     const buttonsRow2 = [ 6, 7, 8, 9, 'X'];
-    // const emojiList = ['🤔', '👍'];
+
+    const otherPlayerNum = props.playerNum === 1 ? 2 : 1;
     
     // get board, roomId, and solution from server json
     async function getBoard() {
@@ -33,6 +31,8 @@ function GamePage(props) {
             const { data: axiosGame } = await axios.get(`http://chookie.local:8080/read-game/${roomId}`);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
+            // send username to socket
+            props.socket.emit('send-name', { roomId : roomId, sendName : props.myName });
 
             // emit board to socket for second user
             // socket.emit('create-game', axiosGame);
@@ -44,7 +44,6 @@ function GamePage(props) {
 
     // create board on page load
     useEffect(() => {
-        // props.socket.emit('join-room', roomId);
         props.socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
         });
@@ -57,6 +56,13 @@ function GamePage(props) {
             setOtherUserSelectedTile(tileCoords);
         });
     };
+
+    useEffect(() => {
+        // receive other user's name
+        props.socket.on('receive-name', receivedName => {
+            props.setTheirName(receivedName);
+        });
+    }, []);
 
     useEffect(() => {
         receiveTile();
@@ -104,6 +110,7 @@ function GamePage(props) {
         }
         // set selected tile in board to button's value
         tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
+        console.log(tmpBoard);
         setBoard(tmpBoard);
 
         // emit to socket when a change is made
@@ -140,8 +147,8 @@ function GamePage(props) {
                     Leave
                 </button>
                 <div className='game-page__text'>
-                    <h1 className='game-page__logo'>Sudo<span className='game-page__logo-span'>two</span>!</h1>
-                    <p className='game-page__subheader'>with <span className='game-page__subheader-span'>other player</span> | timer</p>
+                    <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1>
+                    <p className='game-page__subheader'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span> | timer</p>
                 </div>
                 <button className='game-page__reveal' onClick={revealClick}>
                     <img className='game-page__reveal-icon' src='' alt=''/>
@@ -150,6 +157,7 @@ function GamePage(props) {
             </header>
             <GameBoard 
                 roomId={roomId}
+                playerNum={props.playerNum}
                 board={board}
                 setBoard={setBoard}
                 solution={solution}
@@ -164,21 +172,21 @@ function GamePage(props) {
                 <div className='buttons__row buttons__row--1'>
                     {buttonsRow1.map(btn => {
                         return(
-                            <SelectorButton text={btn} clickButton={clickButton} />
+                            <SelectorButton text={btn} clickButton={clickButton} playerNum={props.playerNum} />
                         )
                     })}
                 </div>
                 <div className='buttons__row buttons__row--2'>
                     {buttonsRow2.map(btn => {
                         return(
-                            <SelectorButton text={btn} clickButton={clickButton} />
+                            <SelectorButton text={btn} clickButton={clickButton} playerNum={props.playerNum} />
                         )
                     })}
                 </div>
                 <div className='buttons__row buttons__row--reactions'>
-                    <button className='buttons__reaction buttons__reaction--emoji' onClick={clickButton}>🤔</button>
-                    <button className='buttons__reaction buttons__reaction--emoji' onClick={clickButton}>👍</button>
-                    <button className='buttons__reaction buttons__reaction--submit' onClick={submitClick}>Submit game</button>
+                    <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>🤔</button>
+                    <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>👍</button>
+                    <button className={`buttons__reaction buttons__reaction--submit buttons__reaction--${props.playerNum}`} onClick={submitClick}>Submit game</button>
                 </div>
             </div>
         </div>

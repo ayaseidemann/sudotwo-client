@@ -14,16 +14,18 @@ const socket = io.connect(`http://chookie.local:8080`);
 function App() {
 
   // set username
-  const [username, setUsername] = useState('');
+  const [myName, setMyName] = useState('');
+  const [theirName, setTheirName] = useState('');
+  const [playerNum, setPlayerNum] = useState(0);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/game/:roomId' element={<GamePage username={username} socket={socket}/>} />
-          <Route path='/create-room' element={<CreateGame username={username} setUsername={setUsername} socket={socket} />} />
-          <Route path='/join-room' element={<JoinGame setUsername={setUsername} socket={socket} />} />
+          <Route path='/game/:roomId' element={<GamePage myName={myName} theirName={theirName} setTheirName={setTheirName} playerNum={playerNum} socket={socket}/>} />
+          <Route path='/create-room' element={<CreateGame myName={myName} setMyName={setMyName} setPlayerNum={setPlayerNum} socket={socket} />} />
+          <Route path='/join-room' element={<JoinGame myName={myName} setMyName={setMyName} setTheirName={setTheirName} setPlayerNum={setPlayerNum} socket={socket} />} />
         </Routes>
       </BrowserRouter>
     </div>

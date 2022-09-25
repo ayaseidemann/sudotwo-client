@@ -1,9 +1,9 @@
 import './SelectorButton.scss';
 
-function SelectorButton({ text, clickButton }) {
+function SelectorButton(props) {
 
     return(
-        <button className='selector-button' onClick={clickButton}>{text}</button>
+        <button className={`selector-button selector-button--${props.playerNum}`} onClick={props.clickButton}>{props.text}</button>
     )
 }
 

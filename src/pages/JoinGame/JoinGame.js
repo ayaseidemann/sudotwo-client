@@ -46,17 +46,24 @@ function JoinGame(props) {
         const roomId = event.target.roomId.value;
         const roomExists = await doesRoomExist(roomId);
         if (roomExists) {
-            props.setUsername(event.target.name.value);
-            props.socket.emit('join-room', roomId);
+            props.setMyName(event.target.name.value);
+            props.socket.emit('join-room', roomId);        
         } else {
             alert("this isn't a room dummy");
-            // event.target.roomId.value = '';
+            event.target.roomId.value = '';
         }
     }
+
+    // {
+    //     roomId: roomId,
+    //     username: event.target.name.value
+    // }
 
     // on receiving socket go-to-to, nav to game page
     function startGame() {
         props.socket.on('go-to-game', roomId => {
+            console.log('data:', roomId);
+            props.setPlayerNum(2);
             navigate(`/game/${roomId}`);
         })
         props.socket.on('no-entry', roomId => {
