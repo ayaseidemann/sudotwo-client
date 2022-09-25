@@ -8,6 +8,12 @@ function BoardTile(props) {
 
     const otherPlayerNum = props.playerNum === 1 ? 2 : 1;
 
+    // check which user entered tile
+    if (props.inputBoard[props.rowNum - 1][props.colNum - 1] ===1 || props.inputBoard[props.rowNum - 1][props.colNum - 1] === 2) {
+        console.log('user', props.inputBoard[props.rowNum - 1][props.colNum - 1], 'input tile', props.rowNum - 1, props.colNum - 1);
+
+    }
+
     // if the value is 0 set the tile to be blank
     let text = props.val === 0 ? "" : props.val;
 
@@ -79,7 +85,7 @@ function BoardTile(props) {
                     key={`${props.rowNum}${props.colNum}`}
                     row={props.rowNum}
                     column={props.colNum}
-                    className={`tile tile--${props.playerNum} col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
+                    className={`tile tile--${props.playerNum} col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass} user--${props.inputBoard[props.rowNum - 1][props.colNum - 1]}`}
                     solution={props.solutionTile}
                     onClick={clickTile}
                 >{text}
