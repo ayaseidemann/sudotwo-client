@@ -46,7 +46,6 @@ function GamePage(props) {
                     }
                 })
             });
-            console.log(tmpInputBoard);
             setInputBoard(tmpInputBoard);
             // emit board to socket for second user
             // socket.emit('create-game', axiosGame);
@@ -69,6 +68,9 @@ function GamePage(props) {
         props.socket.on('receive-tile', tileCoords => {
             setOtherUserSelectedTile(tileCoords);
         });
+        props.socket.on('receive-emoji', receivedEmojiBoard => {
+            setEmojiBoard(receivedEmojiBoard);
+        })
     };
 
     useEffect(() => {
@@ -111,6 +113,11 @@ function GamePage(props) {
         // updates the emoji on the current selected tile to inputed emoji
         tmpEmojiBoard[selectedTile[0]][selectedTile[1]] = newEmoji;
         setEmojiBoard(tmpEmojiBoard);
+        // emit emoji board change to socket
+        props.socket.emit('emoji-change', {
+            roomId: roomId,
+            emojiBoard: emojiBoard
+        });
     }
 
     // click handler for number or delete buttons 
@@ -125,12 +132,10 @@ function GamePage(props) {
         }
         // set selected tile in board to button's value
         tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
-        console.log(tmpBoard);
         setBoard(tmpBoard);
         // update input board to player's number in the position of the updated tile
         const tmpInputBoard = [...inputBoard];
         tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum;
-        console.log(tmpInputBoard);
         setInputBoard(tmpInputBoard);
 
         // emit to socket when a change is made
@@ -145,6 +150,8 @@ function GamePage(props) {
     // click handler for emoji buttons
     function emojiClickButton(event) {
         updateSelectedEmoji(event.target.innerText);
+        // let tmpEmojiBoard = [...emojiBoard];
+
     }
 
     function leaveClick(event) {
