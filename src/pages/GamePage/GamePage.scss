@@ -42,6 +42,7 @@
         font-size: 0.75rem;
         font-weight: $medium;
         text-transform: uppercase;
+        display: flex;
         margin: 0;
 
         &-span {
@@ -54,6 +55,11 @@
                 color: $player2-color;
             }        
         }
+    }
+
+
+    &__other-name {
+        margin-right: 0.2rem;
     }
 
     &__leave, &__reveal {

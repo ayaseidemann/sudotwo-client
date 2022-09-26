@@ -4,6 +4,7 @@ import SelectorButton from '../../components/SelectorButton/SelectorButton';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Timer from '../../components/Timer/Timer';
 
 
 function GamePage(props) {
@@ -231,6 +232,7 @@ function GamePage(props) {
         }
     }
 
+
     return (
 
         <div className='game-page' onKeyDown={fillBoard} tabIndex="0">
@@ -241,7 +243,9 @@ function GamePage(props) {
                 </button>
                 <div className='game-page__text'>
                     <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1>
-                    <p className='game-page__subheader'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span> | timer</p>
+                    <p className='game-page__subheader'>
+                        <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
+                        <Timer /></p>
                 </div>
                 <button className='game-page__reveal' onClick={revealClick}>
                     <img className='game-page__reveal-icon' src='' alt=''/>
