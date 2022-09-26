@@ -27,6 +27,7 @@ function CreateGame(props) {
     // function to create new game and navigate to it
     async function createRoom(event) {
         event.preventDefault();
+        setIsButtonActive(false);
         // generate random 5 digit id
         const uid = new ShortUniqueId({ length: 5 });
         const roomId = uid().toUpperCase();
