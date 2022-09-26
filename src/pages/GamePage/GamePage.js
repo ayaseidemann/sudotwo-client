@@ -70,6 +70,9 @@ function GamePage(props) {
         });
         props.socket.on('receive-emoji', receivedEmojiBoard => {
             setEmojiBoard(receivedEmojiBoard);
+        });
+        props.socket.on('receive-won-game', () => {
+            console.log('other user submitted and you won!');
         })
     };
 
@@ -150,8 +153,6 @@ function GamePage(props) {
     // click handler for emoji buttons
     function emojiClickButton(event) {
         updateSelectedEmoji(event.target.innerText);
-        // let tmpEmojiBoard = [...emojiBoard];
-
     }
 
     function leaveClick(event) {
@@ -162,13 +163,77 @@ function GamePage(props) {
         
     }
 
-    function submitClick() {
+    // console.log(board);
 
+    function submitClick() {
+        // check for no zeros/unfilled tiles
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                if (board[i][j] === 0) {
+                    alert('cannot submit board');
+                    return;
+                }
+            }
+        }
+        // turn board to all numbers
+        let tmpBoard = [...board];
+        for (let i = 0; i < tmpBoard.length; i++) {
+            for (let j = 0; j < tmpBoard[i].length; j++) {
+                if (typeof tmpBoard[i][j] === 'string') {
+                    tmpBoard[i][j] = Number(tmpBoard[i][j]);
+                }
+            }
+        }
+        if (JSON.stringify(tmpBoard) === JSON.stringify(solution)) {
+            console.log('YOU DID IT!!!!');
+            props.socket.emit('won-game',roomId);
+        } else {
+            alert('there is a mistake in the game somewhere');
+        }
+    }
+
+    function fillBoard(event) {
+        if (event.key === 'p') {
+            let tmpBoard = [...board];
+            tmpBoard.map((row, i) => {
+                row.map((tile, j) => {
+                    if (tmpBoard[i][j] === 0) {
+                        tmpBoard[i][j] = '1'
+                    }
+                })
+            })
+            // emit to socket when a change is made
+            props.socket.emit('tile-change', 
+            {
+                roomId: roomId,
+                board: board,
+                inputBoard: inputBoard
+            });
+            setBoard(tmpBoard);
+        }
+        if (event.key === 'l') {
+            let tmpBoard = [...board];
+            tmpBoard.map((row, i) => {
+                row.map((tile, j) => {
+                    if (typeof tmpBoard[i][j] === 'string' || tmpBoard[i][j] === 0) {
+                        tmpBoard[i][j] = String(solution[i][j]);
+                    }
+                })
+            })
+            // emit to socket when a change is made
+            props.socket.emit('tile-change', 
+            {
+                roomId: roomId,
+                board: board,
+                inputBoard: inputBoard
+            });
+            setBoard(tmpBoard);
+        }
     }
 
     return (
 
-        <div className='game-page'>
+        <div className='game-page' onKeyDown={fillBoard} tabIndex="0">
             <header className='game-page__header'>
                 <button className='game-page__leave' onClick={leaveClick}>
                     <img className='game-page__leave-icon' src='' alt=''/>
