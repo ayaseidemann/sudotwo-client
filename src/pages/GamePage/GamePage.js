@@ -16,6 +16,7 @@ function GamePage(props) {
     const [solution, setSolution] = useState([]);
     const [inputBoard, setInputBoard] = useState([]);
     // const [inputVal, setInputVal] = useState('');
+    const [receivedTime, setReceivedTime] = useState('');
     const [emojiBoard, setEmojiBoard] = useState([[],[],[],[],[],[],[],[],[]]);
     const [selectedTile, setSelectedTile] = useState([]);
     const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
@@ -58,6 +59,10 @@ function GamePage(props) {
 
     // create board on page load
     useEffect(() => {
+        props.socket.on('receive-time', timer => {
+            console.log(timer);
+            setReceivedTime(timer);
+        })
         props.socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
         });
@@ -245,7 +250,13 @@ function GamePage(props) {
                     <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1>
                     <p className='game-page__subheader'>
                         <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
-                        <Timer /></p>
+                        {props.playerNum === 1 &&
+                            <Timer socket={props.socket} roomId={roomId} />
+                        }
+                        {props.playerNum === 2 &&
+                            <div className='timer'>{receivedTime}</div>    
+                        }
+                    </p>
                 </div>
                 <button className='game-page__reveal' onClick={revealClick}>
                     <img className='game-page__reveal-icon' src='' alt=''/>
