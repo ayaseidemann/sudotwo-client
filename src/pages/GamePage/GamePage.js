@@ -181,7 +181,7 @@ function GamePage(props) {
             }
         }
         // turn board to all numbers
-        let tmpBoard = [...board];
+        let tmpBoard = JSON.parse(JSON.stringify(board));
         for (let i = 0; i < tmpBoard.length; i++) {
             for (let j = 0; j < tmpBoard[i].length; j++) {
                 if (typeof tmpBoard[i][j] === 'string') {
@@ -195,6 +195,9 @@ function GamePage(props) {
         } else {
             alert('there is a mistake in the game somewhere');
         }
+        console.log('board', board);
+        console.log('tmpBoard', tmpBoard);
+        console.log('solution', solution);
     }
 
     function fillBoard(event) {
