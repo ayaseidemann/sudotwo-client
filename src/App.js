@@ -5,11 +5,11 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import GamePage from './pages/GamePage/GamePage';
 import JoinGame from './pages/JoinGame/JoinGame';
 import CreateGame from './pages/CreateGame/CreateGame';
-import WaitingRoom from './components/WaitingRoom/WaitingRoom';
+import WaitingRoom from './components/WaitingRoom/WaitingRoom'; 
 
 // load socket.io client and connect to server
 import { io } from 'socket.io-client';
-const socket = io.connect(`http://chookie.local:8080`);
+const socket = io.connect(process.env.REACT_APP_SERVER_URL);
 
 function App() {
 

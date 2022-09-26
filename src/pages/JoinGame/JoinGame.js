@@ -35,7 +35,7 @@ function JoinGame(props) {
 
     // check if room Id exists in all room Ids from JSON
     const doesRoomExist =  async (roomId) => {
-        const { data: rooms } = await axios.get(`http://chookie.local:8080/all-games`);
+        const { data: rooms } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/all-games`);
         const roomToJoin = rooms.find(room => room.roomId === roomId);
         return (roomToJoin ? true : false);
     }
