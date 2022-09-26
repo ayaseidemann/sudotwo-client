@@ -10,6 +10,7 @@ function BoardRow(props) {
             {props.rowData.map((val, i) => {
                 return(
                     <BoardTile 
+                        key={`${props.rowNum}-${i}`}
                         colNum={i+1} 
                         rowNum={props.rowNum}
                         val={val} 

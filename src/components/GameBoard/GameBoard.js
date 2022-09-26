@@ -8,6 +8,7 @@ function GameBoard(props) {
             {props.board.map((rowData, i) => {
                 return(
                         <BoardRow 
+                            key={i}
                             rowNum={i+1} 
                             rowData={rowData} 
                             rowSolution={props.solution[i]}

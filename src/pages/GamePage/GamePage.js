@@ -60,7 +60,6 @@ function GamePage(props) {
     // create board on page load
     useEffect(() => {
         props.socket.on('receive-time', timer => {
-            console.log(timer);
             setReceivedTime(timer);
         })
         props.socket.on("connect_error", (err) => {
@@ -202,9 +201,9 @@ function GamePage(props) {
         if (event.key === 'p') {
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
-                row.map((tile, j) => {
+                return row.map((tile, j) => {
                     if (tmpBoard[i][j] === 0) {
-                        tmpBoard[i][j] = '1'
+                        return tmpBoard[i][j] = '1'
                     }
                 })
             })
@@ -220,9 +219,9 @@ function GamePage(props) {
         if (event.key === 'l') {
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
-                row.map((tile, j) => {
+                return row.map((tile, j) => {
                     if (typeof tmpBoard[i][j] === 'string' || tmpBoard[i][j] === 0) {
-                        tmpBoard[i][j] = String(solution[i][j]);
+                        return tmpBoard[i][j] = String(solution[i][j]);
                     }
                 })
             })
@@ -248,7 +247,7 @@ function GamePage(props) {
                 </button>
                 <div className='game-page__text'>
                     <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1>
-                    <p className='game-page__subheader'>
+                    <div className='game-page__subheader'>
                         <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
                         {props.playerNum === 1 &&
                             <Timer socket={props.socket} roomId={roomId} />
@@ -256,7 +255,7 @@ function GamePage(props) {
                         {props.playerNum === 2 &&
                             <div className='timer'>{receivedTime}</div>    
                         }
-                    </p>
+                    </div>
                 </div>
                 <button className='game-page__reveal' onClick={revealClick}>
                     <img className='game-page__reveal-icon' src='' alt=''/>
@@ -281,14 +280,14 @@ function GamePage(props) {
                 <div className='buttons__row buttons__row--1'>
                     {buttonsRow1.map(btn => {
                         return(
-                            <SelectorButton text={btn} clickButton={clickButton} playerNum={props.playerNum} />
+                            <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
                         )
                     })}
                 </div>
                 <div className='buttons__row buttons__row--2'>
                     {buttonsRow2.map(btn => {
                         return(
-                            <SelectorButton text={btn} clickButton={clickButton} playerNum={props.playerNum} />
+                            <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
                         )
                     })}
                 </div>
