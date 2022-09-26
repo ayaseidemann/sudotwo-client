@@ -2,7 +2,7 @@ import './Timer.scss';
 import { useState, useEffect } from 'react';
 
 
-function Timer() {
+function Timer(props) {
 
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
@@ -28,6 +28,8 @@ function Timer() {
     let stringSeconds = seconds < 10 ? '0' + seconds : String(seconds);
     let stringMinutes = minutes < 10 ? '0' + minutes : String(minutes);
     let stringTime = stringMinutes + ':' + stringSeconds;
+
+    props.socket.emit('time-change', {roomId: props.roomId, timer: stringTime})
 
     return (
         <div className='timer'>{stringTime}</div>
