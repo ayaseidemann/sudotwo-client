@@ -34,7 +34,7 @@ function CreateGame(props) {
         setRoomId(roomId);
         props.setMyName(event.target.name.value);
         // setup game in server with given room id
-        await axios.get(`http://chookie.local:8080/setup-game/${roomId}`);
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/setup-game/${roomId}`);
         props.socket.emit('join-room', roomId);
         console.log('joining room:', roomId);
         setWaitingRoom(true);

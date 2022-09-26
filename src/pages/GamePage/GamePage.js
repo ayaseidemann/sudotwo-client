@@ -31,7 +31,7 @@ function GamePage(props) {
     // get board, roomId, and solution from server json
     async function getBoard() {
         try {
-            const { data: axiosGame } = await axios.get(`http://chookie.local:8080/read-game/${roomId}`);
+            const { data: axiosGame } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/read-game/${roomId}`);
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
             // send username to socket
