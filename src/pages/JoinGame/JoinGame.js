@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import BasicHeader from '../../components/BasicHeader/BasicHeader';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
-
+import error from '../../assets/sudotwo_images/16/error@3x.png';
 
 function JoinGame(props) {
 
@@ -14,6 +14,8 @@ function JoinGame(props) {
     // set state for input validation
     const [nameFilled, setNameFilled] = useState(false);
     const [codeFilled, setcodeFilled] = useState(false);
+    const [roomNotFound, setroomNotFound] = useState(false);
+    const [roomFull, setRoomFull] = useState(false);
 
     // if name input is not blank set filled to true
     function nameInputChange(event) {
@@ -26,6 +28,9 @@ function JoinGame(props) {
 
     // if code input is > 5 characters set filled to true
     function codeInputChange(event) {
+        // make errors go away if present
+        setRoomFull(false);
+        setroomNotFound(false);
         if (event.target.value.length === 5) {
             setcodeFilled(true);
         } else {
@@ -49,8 +54,9 @@ function JoinGame(props) {
             props.setMyName(event.target.name.value);
             props.socket.emit('join-room', roomId);        
         } else {
-            alert("this isn't a room dummy");
-            event.target.roomId.value = '';
+            setroomNotFound(true);
+            // alert("this isn't a room dummy");
+            // event.target.roomId.value = '';
         }
     }
 
@@ -67,7 +73,8 @@ function JoinGame(props) {
             navigate(`/game/${roomId}`);
         })
         props.socket.on('no-entry', roomId => {
-            alert('sorry room is full!');
+            // alert('sorry room is full!');
+            setRoomFull(true);
         })
     }
 
@@ -98,6 +105,14 @@ function JoinGame(props) {
                         maxLength='5'
                         onChange={codeInputChange}
                     />
+                    <div className={`room-not-found--${roomNotFound}`}>
+                        <p className='room-not-found__p'>Room not found</p>
+                        <img className='room-not-found__icon' src={error} alt=''/>
+                    </div>
+                    <div className={`room-full--${roomFull}`}>
+                        <p className='room-full__p'>Room already full</p>
+                        <img className='room-full__icon' src={error} alt=''/>
+                    </div>
                 </label>
                 <SubmitButton 
                     text='Join Game' 
