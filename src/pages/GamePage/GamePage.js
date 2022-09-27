@@ -1,8 +1,14 @@
 import './GamePage.scss';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import logo from '../../assets/sudotwo_images/logo_small@3x.png';
+import leaveIcon from '../../assets/sudotwo_images/16/leave@3x.png';
+import revealIcon from '../../assets/sudotwo_images/16/reveal@3x.png';
+import hmmNeutralEmoji from '../../assets/sudotwo_images/20/hmm-neutral@3x.png';
+import yesNeutralEmoji from '../../assets/sudotwo_images/20/yes-neutral@3x.png';
+
 import axios from 'axios';
 import Timer from '../../components/Timer/Timer';
 import Modal from '../../components/Modal/Modal';
@@ -11,6 +17,7 @@ import Modal from '../../components/Modal/Modal';
 function GamePage(props) {
 
     const { roomId } = useParams();
+    const navigate = useNavigate();
 
     // set state for variables that change
     const [board, setBoard] = useState([]);
@@ -173,11 +180,10 @@ function GamePage(props) {
     }
 
     function leaveClick(event) {
-
+        navigate('/');
     }
 
     function revealClick(event) {
-        console.log('revealing click event');
         let tmpBoard = [...board];
         tmpBoard[selectedTile[0]][selectedTile[1]] = String(solution[selectedTile[0]][selectedTile[1]]);
         setBoard(tmpBoard);
@@ -275,11 +281,12 @@ function GamePage(props) {
             <div className={`game-page`} onKeyDown={fillBoard} tabIndex="0">
                 <header className='game-page__header'>
                     <button className='game-page__leave' onClick={leaveClick}>
-                        <img className='game-page__leave-icon' src='' alt='' />
-                        Leave
+                        <img className='game-page__leave-icon' src={leaveIcon} alt='' />
+                        <p className='game-page__leave-p'>Leave</p>
                     </button>
                     <div className='game-page__text'>
-                        <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1>
+                        <img className='game-page__logo' src={logo}/>
+                        {/* <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1> */}
                         <div className='game-page__subheader'>
                             <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
                             {props.playerNum === 1 &&
@@ -291,8 +298,8 @@ function GamePage(props) {
                         </div>
                     </div>
                     <button className='game-page__reveal' onClick={revealClick}>
-                        <img className='game-page__reveal-icon' src='' alt='' />
-                        Reveal
+                        <p className='game-page__reveal-p'>Reveal</p>
+                        <img className='game-page__reveal-icon' src={revealIcon} alt='' />
                     </button>
                 </header>
                 <GameBoard
@@ -325,8 +332,12 @@ function GamePage(props) {
                         })}
                     </div>
                     <div className='buttons__row buttons__row--reactions'>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>🤔</button>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>👍</button>
+                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>
+                            <img className='buttons__reaction--img' src={hmmNeutralEmoji}/>
+                        </button>
+                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>
+                            <img className='buttons__reaction--img' src={yesNeutralEmoji}/>
+                        </button>
                         <button className={`buttons__reaction buttons__reaction--submit buttons__reaction--${props.playerNum}`} onClick={submitClick}>Submit game</button>
                     </div>
                 </div>

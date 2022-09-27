@@ -11,10 +11,8 @@
         padding: 6rem 1rem 1rem;
     }
 
-    &__header {
-        font-size: 3rem;
-        font-weight: $extra-bold;
-        margin: 0 0 0.25rem;
+    &__logo {
+        width: 15.5rem;
     }
 
     &__color{
@@ -28,14 +26,24 @@
         text-align: center;
         margin: 0 0 1.75rem;
     }
+}
 
-    &__footer {
-        position: absolute;
-        bottom: 1.5rem;
-        width: 100%;
-        font-size: 0.75rem;
-        font-weight: $medium;
-        text-transform: uppercase;
-        text-align: center;
+.footer {
+    position: absolute;
+    bottom: 1.5rem;
+    width: 100%;
+    font-size: 0.75rem;
+    font-weight: $medium;
+    text-transform: uppercase;
+    text-align: center;
+
+    &__credits{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__p {
+        margin: 0 0 0.25rem 0;
     }
 }
