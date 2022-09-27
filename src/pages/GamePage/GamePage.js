@@ -245,16 +245,8 @@ function GamePage(props) {
     }
 
     return (
-        <>
-            <Modal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                type={modalType}
-                myName={props.myName}
-                theirName={props.theirName}
-            />
-
-            <div className={`game-page game-page--modal-${showModal}`} onKeyDown={fillBoard} tabIndex="0">
+        <div className='game-page__wrapper'>
+            <div className={`game-page`} onKeyDown={fillBoard} tabIndex="0">
                 <header className='game-page__header'>
                     <button className='game-page__leave' onClick={leaveClick}>
                         <img className='game-page__leave-icon' src='' alt='' />
@@ -313,7 +305,17 @@ function GamePage(props) {
                     </div>
                 </div>
             </div>
-        </>
+
+            <div className={`modal__wrapper modal__wrapper--${showModal}`}>
+                <Modal
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    type={modalType}
+                    myName={props.myName}
+                    theirName={props.theirName}
+                />
+            </div>
+        </div>
 
     )
 
