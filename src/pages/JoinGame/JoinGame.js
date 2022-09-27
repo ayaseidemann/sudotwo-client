@@ -54,11 +54,6 @@ function JoinGame(props) {
         }
     }
 
-    // {
-    //     roomId: roomId,
-    //     username: event.target.name.value
-    // }
-
     // on receiving socket go-to-to, nav to game page
     function startGame() {
         props.socket.on('go-to-game', roomId => {
