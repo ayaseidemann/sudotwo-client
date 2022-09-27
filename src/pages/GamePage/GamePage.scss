@@ -25,20 +25,7 @@
     }
 
     &__logo {
-        font-size: 1.62rem;
-        font-weight: $extra-bold;
-        margin: 0 0 0.25rem;
-
-        &-span {
-
-            &--1 {
-                color: $player1-color;
-            }
-
-            &--2 {
-                color: $player2-color;
-            }
-        }
+        width: 7rem;
     }
 
     &__subheader {
@@ -67,12 +54,25 @@
     }
 
     &__leave, &__reveal {
+        display: flex;
+        align-items: center;
         padding: 0;
         background-color: $primary-light;
-        font-size: 0.75rem;
-        font-weight: $medium;
-        text-transform: uppercase;
         border: none;
+
+        &-p{
+            font-size: 0.75rem;
+            font-weight: $medium;
+            text-transform: uppercase;
+        }
+
+        &-icon {
+            width: 1rem;
+        }
+    }
+
+    &__leave-icon, &__reveal-p {
+        margin-right: 0.25rem;
     }
 }
 
@@ -102,6 +102,10 @@
 
         &--emoji {
             width: 3.2rem;
+        }
+
+        &--img{
+            width: 1rem;
         }
 
         &--submit {

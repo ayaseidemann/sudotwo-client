@@ -27,16 +27,6 @@
     &--2 {
         color: $player2-color;
     }
-
-    &--3 {
-        color:$player1-color;
-        background-color: $player1-color-opaque;
-    }
-
-    &--4 {
-        color:$player2-color;
-        background-color: $player2-color-opaque;
-    }
 }
 
 .col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {

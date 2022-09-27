@@ -9,6 +9,8 @@
 
     &__back {
         padding: 0;
+        display: flex;
+        align-items: center;
         background-color: $primary-light;
         font-size: 0.75rem;
         font-weight: $medium;
@@ -16,6 +18,11 @@
         border: none;
         position: absolute;
         left: 0.68rem;
+    }
+
+    &__icon {
+        width: 1rem;
+        margin-right: 0.44rem;
     }
 
     &__text {
