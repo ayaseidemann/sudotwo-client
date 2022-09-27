@@ -158,7 +158,6 @@ function GamePage(props) {
         const tmpInputBoard = [...inputBoard];
         tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum;
         setInputBoard(tmpInputBoard);
-
         // emit to socket when a change is made
         props.socket.emit('tile-change',
             {
@@ -178,10 +177,23 @@ function GamePage(props) {
     }
 
     function revealClick(event) {
-
+        console.log('revealing click event');
+        let tmpBoard = [...board];
+        tmpBoard[selectedTile[0]][selectedTile[1]] = String(solution[selectedTile[0]][selectedTile[1]]);
+        setBoard(tmpBoard);
+        const tmpInputBoard = [...inputBoard];
+        tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum + 2;
+        setInputBoard(tmpInputBoard);
+        console.log('board', board);
+        console.log('inputBoard', inputBoard);
+        // emit to socket when a change is made
+        props.socket.emit('tile-change',
+        {
+            roomId: roomId,
+            board: board,
+            inputBoard: inputBoard
+        });
     }
-
-    // console.log(board);
 
     function submitClick() {
         // check for no zeros/unfilled tiles
