@@ -27,6 +27,16 @@
     &--2 {
         color: $player2-color;
     }
+
+    &--3 {
+        color:$player1-color;
+        background-color: $player1-color-opaque;
+    }
+
+    &--4 {
+        color:$player2-color;
+        background-color: $player2-color-opaque;
+    }
 }
 
 .col-1, .col-2, .col-4, .col-5, .col-7, .col-8 {
@@ -49,6 +59,21 @@
     border-bottom: 2px solid $primary-dark;
 }
 
+.other-selected {
+    z-index: 10;
+
+
+    &--1 {
+        border: 1px solid $player1-color;
+        outline: 3px solid $player1-color;
+    }
+
+    &--2 {
+        border: 1px solid $player2-color;
+        outline: 3px solid $player2-color;
+    }
+}
+
 .selected {
     background-color: $primary-light;
     z-index: 11;
@@ -64,19 +89,17 @@
     }
 }
 
-.other-selected {
-    z-index: 10;
-
-
-    &--1 {
-        border: 1px solid $player1-color;
-        outline: 3px solid $player1-color;
+.user {
+    &--3 {
+        color:$player1-color;
+        background-color: $player1-color-opaque;
     }
 
-    &--2 {
-        border: 1px solid $player2-color;
-        outline: 3px solid $player2-color;
-    }}
+    &--4 {
+        color:$player2-color;
+        background-color: $player2-color-opaque;
+    }
+}
 
 .locked {
     font-weight: bold;

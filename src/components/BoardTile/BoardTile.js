@@ -70,17 +70,6 @@ function BoardTile(props) {
                     className={`tile col-${props.colNum} x-section-${xSectionNum} locked`}
                 >{props.val}
                 </div> :
-            // props.otherUserTileValue !== "" ?
-            // <div
-            //     key={`${props.rowNum}${props.colNum}`}
-            //     row={props.rowNum}
-            //     column={props.colNum}
-            //     className={`tile col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass}`}
-            //     solution={props.solutionTile}
-            //     onClick={clickTile}
-            // >{props.otherUserTileValue}
-            //     <div className='reaction'>{emoji}</div> 
-            // </div> :
                 <div
                     key={`${props.rowNum}${props.colNum}`}
                     row={props.rowNum}
