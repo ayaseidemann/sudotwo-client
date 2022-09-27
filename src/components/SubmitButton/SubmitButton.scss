@@ -32,4 +32,9 @@
         color: $inactive-light;
         box-shadow: none;
     }
+
+    &--small {
+        width: 14.87rem;
+        height: 2.37rem;
+    }
 }
