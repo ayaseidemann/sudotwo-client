@@ -82,7 +82,7 @@ function GamePage(props) {
         });
         props.socket.on('disconnect', (reason) => {
             if(props.socket.id){
-                props.socket.emit('add user', props.socket.id);
+                props.socket.emit('join-room', roomId);
             }
         });
         getBoard();
