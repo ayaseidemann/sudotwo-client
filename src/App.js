@@ -25,7 +25,7 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/game/:roomId' element={<GamePage myName={myName} theirName={theirName} setTheirName={setTheirName} playerNum={playerNum} socket={socket}/>} />
           <Route path='/create-room' element={<CreateGame myName={myName} setMyName={setMyName} setPlayerNum={setPlayerNum} socket={socket} />} />
-          <Route path='/join-room' element={<JoinGame myName={myName} setMyName={setMyName} setTheirName={setTheirName} setPlayerNum={setPlayerNum} socket={socket} />} />
+          <Route path='/join' element={<JoinGame myName={myName} setMyName={setMyName} setTheirName={setTheirName} setPlayerNum={setPlayerNum} socket={socket} />} />
         </Routes>
       </BrowserRouter>
     </div>

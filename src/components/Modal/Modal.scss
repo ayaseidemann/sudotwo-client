@@ -21,9 +21,41 @@
         font-size: 0.875rem;
         font-weight: $light;
         margin: 0 0 1rem 0;
+
+        &--false {
+            display: none;
+        }
     }
 
     .submit-button {
         margin-bottom: 0;
+    }
+
+    &__win {
+        font-size: 0.875rem;
+        font-weight: $light;
+        margin: 0 0 1rem 0;
+
+        &--false {
+            display: none;
+        }
+
+        &--true {
+            display: block;
+        }
+    }
+
+    &__span {
+        &--1 {
+            text-transform: uppercase;
+            font-weight: $medium;
+            color: $player1-color;
+        }
+
+        &--2 {
+            text-transform: uppercase;
+            font-weight: $medium;
+            color: $player2-color;
+        }
     }
 }

@@ -17,7 +17,9 @@ function GamePage(props) {
     const [solution, setSolution] = useState([]);
     const [inputBoard, setInputBoard] = useState([]);
     // const [inputVal, setInputVal] = useState('');
+    const [timerRunning, setTimerRunning] = useState(true);
     const [receivedTime, setReceivedTime] = useState('');
+    const [time, setTime] = useState('');
     const [emojiBoard, setEmojiBoard] = useState([[], [], [], [], [], [], [], [], []]);
     const [selectedTile, setSelectedTile] = useState([]);
     const [otherUserSelectedTile, setOtherUserSelectedTile] = useState([]);
@@ -86,6 +88,9 @@ function GamePage(props) {
             setShowModal(true);
             setModalType("won");
             console.log('other user submitted and you won!');
+        });
+        props.socket.on('receive-stop-timer', () => {
+            setTimerRunning(false);
         })
     };
 
@@ -200,6 +205,10 @@ function GamePage(props) {
         }
         if (JSON.stringify(tmpBoard) === JSON.stringify(solution)) {
             console.log('YOU DID IT!!!!');
+            if (props.playerNum === 2) {
+                props.socket.emit('stop-timer', roomId);
+            }
+            setTimerRunning(false);
             props.socket.emit('won-game', roomId);
             setShowModal(true);
             setModalType('won');
@@ -262,7 +271,7 @@ function GamePage(props) {
                         <div className='game-page__subheader'>
                             <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
                             {props.playerNum === 1 &&
-                                <Timer socket={props.socket} roomId={roomId} />
+                                <Timer socket={props.socket} roomId={roomId} timerRunning={timerRunning} setTime={setTime}/>
                             }
                             {props.playerNum === 2 &&
                                 <div className='timer'>{receivedTime}</div>
@@ -317,7 +326,10 @@ function GamePage(props) {
                     setShowModal={setShowModal}
                     type={modalType}
                     myName={props.myName}
+                    playerNum={props.playerNum}
+                    otherPlayerNum={otherPlayerNum}
                     theirName={props.theirName}
+                    time={time ? time : receivedTime}
                 />
             </div>
         </div>
