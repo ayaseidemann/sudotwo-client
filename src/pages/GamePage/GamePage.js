@@ -68,6 +68,9 @@ function GamePage(props) {
         props.socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
         });
+        props.socket.on("disconnect", (reason) => {
+            console.log('disconnecting for this reason:', reason)
+        })
         getBoard();
     }, []);
 
@@ -80,6 +83,8 @@ function GamePage(props) {
             setEmojiBoard(receivedEmojiBoard);
         });
         props.socket.on('receive-won-game', () => {
+            setShowModal(true);
+            setModalType("won");
             console.log('other user submitted and you won!');
         })
     };
@@ -197,7 +202,7 @@ function GamePage(props) {
             console.log('YOU DID IT!!!!');
             props.socket.emit('won-game', roomId);
             setShowModal(true);
-            setModalType('won')
+            setModalType('won');
         } else {
             setShowModal(true);
             setModalType('incorrect')
