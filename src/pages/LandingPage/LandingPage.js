@@ -14,7 +14,7 @@ function LandingPage() {
 
     // click handler to navigate to Join Room page
     function joinGameHandler(event) {
-        navigate('/join-room');
+        navigate('/join');
     }
 
     return (
