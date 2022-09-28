@@ -101,6 +101,13 @@ function GamePage(props) {
         props.socket.on('receive-tile', tileCoords => {
             setOtherUserSelectedTile(tileCoords);
         });
+    };
+
+    useEffect(() => {
+        // receive other user's name
+        props.socket.on('receive-name', receivedName => {
+            props.setTheirName(receivedName);
+        });
         props.socket.on('receive-emoji', receivedEmojiBoard => {
             setEmojiBoard(receivedEmojiBoard);
         });
@@ -116,13 +123,6 @@ function GamePage(props) {
             console.log('other user disconnected');
             alert('sorry other player left, bye!');
             navigate('/');
-        });
-    };
-
-    useEffect(() => {
-        // receive other user's name
-        props.socket.on('receive-name', receivedName => {
-            props.setTheirName(receivedName);
         });
     }, []);
 
