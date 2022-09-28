@@ -1,4 +1,5 @@
 @use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
 
 .game-page {
     display: flex;
@@ -11,11 +12,16 @@
 
     &__header {
         width: 100%;
+        max-width: 40rem;
         padding: 0.69rem 0.75rem 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1rem;
+
+        @include tablet {
+            padding: 1.5rem 0.75rem 1rem;
+        }
     }
 
     &__text {
@@ -74,13 +80,26 @@
     &__leave-icon, &__reveal-p {
         margin-right: 0.25rem;
     }
+
+    &__game {
+        min-height: 80vh;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 }
 
 .buttons {
     &__wrapper {
-        width: 284px;
+        width: 18rem;
         display: flex;
         flex-direction: column;
+
+        @include tablet {
+            width: 23.4rem;
+        }
     }
 
     &__row {
@@ -101,8 +120,16 @@
         box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
         margin-bottom: 0.75rem;
 
+        @include tablet {
+            height: 3.2rem;
+        }
+
         &--emoji {
             width: 3.2rem;
+
+            @include tablet {
+                width: 4.2rem;
+            }
         }
 
         &--img{
@@ -110,7 +137,11 @@
         }
 
         &--submit {
-            width: 10.48rem;
+            width: 10.55rem;
+
+            @include tablet {
+                width: 13.8rem;
+            }
         }
 
         &--1 {
