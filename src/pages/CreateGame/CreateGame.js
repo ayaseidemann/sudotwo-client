@@ -42,9 +42,10 @@ function CreateGame(props) {
 
     // on receiving socket go-to-to, nav to game page
     function startGame() {
-        props.socket.on('go-to-game', roomId => {
+        props.socket.on('go-to-game', async data => {
             props.setPlayerNum(1);
-            navigate(`/game/${roomId}`);
+            props.setPlayer2Id(data.player2Id);
+            navigate(`/game/${data.roomId}`);
         })
     }
 
