@@ -1,4 +1,12 @@
 @use '../../styles/partials/variables' as *;
+@keyframes scroll {
+    0% {
+        background-position-y: 0rem;
+    }
+    100% {
+        background-position-y: 18rem;
+    }
+}
 
 .landing {
     display: flex;
@@ -6,9 +14,23 @@
     justify-content: space-between;
     align-items: center;
 
+    &__window {
+        background-image: url(../../assets/sudotwo_images/background_game-board@3x.png);
+        height: 200vh;
+        width: 200vw;
+        left: -50vw;
+        top: -50vh;
+        background-size: 18rem;
+        position: absolute;
+        opacity: 0.1;
+        transform: rotate(-15deg);
+        animation: scroll 15s linear infinite;
+    }
+
     &__wrapper {
         height: 100%;
         padding: 6rem 1rem 1rem;
+        position: relative;
     }
 
     &__logo {
