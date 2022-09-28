@@ -22,7 +22,7 @@ function Modal(props) {
         } else if (props.type === 'won') {
             setTitle(`Congrats!`);
             setText(`You and ${props.theirName} won the game in ${props.time}!`);
-            setButtonText("Let me admire our work");
+            setButtonText("Admire our work");
         }
     }, [props.showModal]);
 

@@ -36,7 +36,7 @@ function GamePage(props) {
 
     // lists of input buttons
     const buttonsRow1 = [1, 2, 3, 4, 5];
-    const buttonsRow2 = [6, 7, 8, 9, 'X'];
+    const buttonsRow2 = [6, 7, 8, 9, '×'];
 
     const otherPlayerNum = props.playerNum === 1 ? 2 : 1;
 
@@ -81,6 +81,10 @@ function GamePage(props) {
     useEffect(() => {
         props.socket.on('receive-time', timer => {
             setReceivedTime(timer);
+
+            // TODO optimize this
+            props.socket.emit('send-name', { roomId: roomId, sendName: props.myName });
+
         })
         props.socket.on("connect_error", (err) => {
             console.log(`connect_error due to ${err.message}`);
@@ -178,9 +182,9 @@ function GamePage(props) {
         // setInputVal(event.target.innerText);
         // if the button is 'X' set value of selected tile to blank, otherwise keep it the button's value
         const tmpBoard = [...board];
-        const newValue = event.target.innerText === 'X' ? 0 : event.target.innerText;
+        const newValue = event.target.innerText === '×' ? 0 : event.target.innerText;
         // if the value, is now blank, make sure the corresponding emoji is deleted
-        if (newValue === '') {
+        if (newValue === 0) {
             updateSelectedEmoji('');
         }
         // set selected tile in board to button's value
@@ -200,8 +204,8 @@ function GamePage(props) {
     }
 
     // click handler for emoji buttons
-    function emojiClickButton(event) {
-        updateSelectedEmoji(event.target.innerText);
+    function emojiClickButton(className) {
+        updateSelectedEmoji(className);
     }
 
     function leaveClick(event) {
@@ -357,10 +361,10 @@ function GamePage(props) {
                         })}
                     </div>
                     <div className='buttons__row buttons__row--reactions'>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>
+                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`hmm-${props.playerNum}`)}>
                             <img className='buttons__reaction--img' src={hmmNeutralEmoji}/>
                         </button>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={emojiClickButton}>
+                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`yes-${props.playerNum}`)}>
                             <img className='buttons__reaction--img' src={yesNeutralEmoji}/>
                         </button>
                         <button className={`buttons__reaction buttons__reaction--submit buttons__reaction--${props.playerNum}`} onClick={submitClick}>Submit game</button>

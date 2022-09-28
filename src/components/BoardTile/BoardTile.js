@@ -78,7 +78,7 @@ function BoardTile(props) {
                     solution={props.solutionTile}
                     onClick={clickTile}
                 >{text}
-                    <div className='reaction'>{emoji}</div>
+                    <div className={`reaction reaction--${emoji}`}></div>
                 </div>
             }
         </>

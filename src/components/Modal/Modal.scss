@@ -21,9 +21,10 @@
         font-size: 0.875rem;
         font-weight: $light;
         margin: 0 0 1rem 0;
+        display: none;
 
-        &--false {
-            display: none;
+        &--true {
+            display: block;
         }
     }
 
@@ -35,10 +36,7 @@
         font-size: 0.875rem;
         font-weight: $light;
         margin: 0 0 1rem 0;
-
-        &--false {
-            display: none;
-        }
+        display: none;
 
         &--true {
             display: block;
