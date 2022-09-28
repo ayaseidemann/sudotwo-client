@@ -34,8 +34,12 @@
         box-shadow: none;
     }
 
-    &--small {
-        width: 14.87rem;
-        height: 2.37rem;
+    &--shadow {
+        box-shadow: 8px 16px 0px rgba(0, 0, 0, 0.1);
     }
+
+    // &--small {
+    //     width: 14.87rem;
+    //     height: 2.37rem;
+    // }
 }

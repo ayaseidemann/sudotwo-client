@@ -43,7 +43,7 @@ function Modal(props) {
                 <p className={`modal__win modal__win--${props.type === 'won'}`}>
                     You and <span className={`modal__span--${props.otherPlayerNum}`}>{props.theirName}</span> won the game in {props.time}!
                 </p>
-                <SubmitButton clickButton={onClose} text={buttonText} active='true' playerNum='0'/>
+                <SubmitButton clickButton={onClose} text={buttonText} active='true'/>
             </div>
         </div>
     )
