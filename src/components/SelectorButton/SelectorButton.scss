@@ -7,16 +7,17 @@
     height: 2.5rem;
     width: 3.2rem;
     background-color: transparent;
+    border-radius: 4px;
     border: 2px solid black;
 
     &--1 {
         color: $player1-color;
-        box-shadow: inset 0px -3px 0px $player1-color;
+        box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
     }
 
     &--2 {
         color: $player2-color;
-        box-shadow: inset 0px -3px 0px $player2-color;
+        box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25);
     }
 
     &--mult {

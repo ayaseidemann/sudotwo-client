@@ -268,6 +268,7 @@ function GamePage(props) {
 
     function fillBoard(event) {
         if (event.key === 'p') {
+            console.log('filling board with ones');
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
                 return row.map((tile, j) => {
@@ -286,6 +287,7 @@ function GamePage(props) {
             setBoard(tmpBoard);
         }
         if (event.key === 'l') {
+            console.log('filling board with solution');
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
                 return row.map((tile, j) => {
