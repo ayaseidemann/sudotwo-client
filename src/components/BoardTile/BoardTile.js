@@ -8,6 +8,8 @@ function BoardTile(props) {
 
     const otherPlayerNum = props.playerNum === 1 ? 2 : 1;
 
+    const inputPlayer = props.inputBoard[props.rowNum - 1][props.colNum - 1];
+
     // check which user entered tile
     // if (props.inputBoard[props.rowNum - 1][props.colNum - 1] ===1 || props.inputBoard[props.rowNum - 1][props.colNum - 1] === 2) {
     //     console.log('user', props.inputBoard[props.rowNum - 1][props.colNum - 1], 'input tile', props.rowNum - 1, props.colNum - 1);
@@ -62,19 +64,19 @@ function BoardTile(props) {
                 from the server and should not have a click handler and display the value
                 otherwise, the div should have a click handler and display text (set above)
                 and the emoji if there is one */}
-            {typeof props.val === 'number' && props.val !== 0 ?
+            {(typeof props.val === 'number' && props.val !== 0) || inputPlayer === 3 || inputPlayer === 4 ?
                 <div
                     key={`${props.rowNum}${props.colNum}`}
                     row={props.rowNum}
                     column={props.colNum}
-                    className={`tile col-${props.colNum} x-section-${xSectionNum} locked`}
+                    className={`tile col-${props.colNum} x-section-${xSectionNum} locked--${inputPlayer}`}
                 >{props.val}
                 </div> :
                 <div
                     key={`${props.rowNum}${props.colNum}`}
                     row={props.rowNum}
                     column={props.colNum}
-                    className={`tile tile--${props.playerNum} col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass} user--${props.inputBoard[props.rowNum - 1][props.colNum - 1]}`}
+                    className={`tile tile--${props.playerNum} col-${props.colNum} x-section-${xSectionNum} ${selectedClass} ${otherSelectedClass} user--${inputPlayer}`}
                     solution={props.solutionTile}
                     onClick={clickTile}
                 >{text}

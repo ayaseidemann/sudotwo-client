@@ -4,8 +4,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // height: 1.94rem;
-    // width: 1.94rem;
     height: 9vw;
     max-height: 2.6rem;
     width: 9vw;
@@ -83,7 +81,13 @@
     }
 }
 
-.user {
+.locked {
+
+    &--0 {
+        font-weight: $extra-bold;
+        background-color: $secondary-light;
+    }
+
     &--3 {
         color:$player1-color;
         background-color: $player1-color-opaque;
@@ -93,11 +97,7 @@
         color:$player2-color;
         background-color: $player2-color-opaque;
     }
-}
 
-.locked {
-    font-weight: bold;
-    background-color: $secondary-light;
 }
 
 .reaction {

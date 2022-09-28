@@ -70,6 +70,7 @@ function CreateGame(props) {
                             name='name'
                             maxLength='12'
                             onChange={inputChange}
+                            autoFocus
                         />
                     </label>
                     <SubmitButton
