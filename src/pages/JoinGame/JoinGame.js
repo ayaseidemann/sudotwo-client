@@ -87,6 +87,7 @@ function JoinGame(props) {
                         name='name'
                         maxLength='12'
                         onChange={nameInputChange}
+                        autoFocus
                     />
                 </label>
                 <label className='join-game__label'>
