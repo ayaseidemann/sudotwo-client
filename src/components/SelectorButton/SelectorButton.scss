@@ -1,6 +1,7 @@
 @use '../../styles/partials/variables' as *;
 
 .selector-button {
+    padding: 0;
     font-size: 1rem;
     font-weight: $extra-bold;
     height: 2.5rem;
@@ -16,5 +17,10 @@
     &--2 {
         color: $player2-color;
         box-shadow: inset 0px -3px 0px $player2-color;
+    }
+
+    &--mult {
+        font-size: 1.7rem;
+        font-weight: $regular;
     }
 }

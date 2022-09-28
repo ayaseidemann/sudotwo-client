@@ -98,9 +98,27 @@
 
 .reaction {
     position: absolute;
-    font-size: 16px;
-    line-height: 16px;
-    right: -4px;
-    bottom: -4px;
-    z-index: 10;
+    background-size: cover;
+    width: 2rem;
+    height: 2rem;
+    right: -0.8rem;
+    bottom: -0.8rem;
+    z-index: 15;
+    pointer-events: none;
+
+    &--hmm-1 {
+        background-image: url(../../assets/sudotwo_images/32/hmm-p1@3x.png);
+    }
+
+    &--hmm-2 {
+        background-image: url(../../assets/sudotwo_images/32/hmm-p2@3x.png);
+    }
+
+    &--yes-1 {
+        background-image: url(../../assets/sudotwo_images/32/yes-p1@3x.png);
+    }
+
+    &--yes-2 {
+        background-image: url(../../assets/sudotwo_images/32/yes-p2@3x.png);
+    }
 }
