@@ -112,11 +112,11 @@ function GamePage(props) {
         props.socket.on('receive-stop-timer', () => {
             setTimerRunning(false);
         });
-        props.socket.on('receive-user-disconnected', () => {
+        props.socket.on('other-disconnected', () => {
             console.log('other user disconnected');
-            alert('the other user left, bye!');
+            alert('sorry other player left, bye!');
             navigate('/');
-        })
+        });
     };
 
     useEffect(() => {
@@ -232,7 +232,7 @@ function GamePage(props) {
             for (let j = 0; j < board[i].length; j++) {
                 if (board[i][j] === 0) {
                     setShowModal(true);
-                    setModalType('incomplete')
+                    setModalType('incomplete');
                     return;
                 }
             }
