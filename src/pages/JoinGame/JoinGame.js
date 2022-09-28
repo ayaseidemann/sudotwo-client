@@ -76,7 +76,7 @@ function JoinGame(props) {
     }, []);
 
     return (
-        <>
+        <div className='join-game__wrapper'>
             <BasicHeader text='Join game' />
             <form className='join-game' onSubmit={joinExistingRoom}>
                 <label className='join-game__label'>
@@ -113,7 +113,7 @@ function JoinGame(props) {
                     playerNum={2}
                 />
             </form>
-        </>
+        </div>
 
     )
 }

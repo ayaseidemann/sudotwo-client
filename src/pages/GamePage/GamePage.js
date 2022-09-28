@@ -46,11 +46,11 @@ function GamePage(props) {
             console.log('props.socket.id', props.socket.id);
             const { data: axiosGame } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/read-game/${roomId}`);
             if (props.playerNum === 1) {
-                await axios.post(`${process.env.REACT_APP_SERVER_URL}/add-socket-id/${roomId}`, 
-                {
-                    "player1Id": props.socket.id,
-                    "player2Id": props.player2Id
-                });
+                await axios.post(`${process.env.REACT_APP_SERVER_URL}/add-socket-id/${roomId}`,
+                    {
+                        "player1Id": props.socket.id,
+                        "player2Id": props.player2Id
+                    });
             }
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
@@ -93,7 +93,7 @@ function GamePage(props) {
             console.log('disconnecting for this reason:', reason)
         });
         props.socket.on('disconnect', (reason) => {
-            if(props.socket.id){
+            if (props.socket.id) {
                 props.socket.emit('join-room', roomId);
             }
         });
@@ -224,11 +224,11 @@ function GamePage(props) {
         console.log('inputBoard', inputBoard);
         // emit to socket when a change is made
         props.socket.emit('tile-change',
-        {
-            roomId: roomId,
-            board: board,
-            inputBoard: inputBoard
-        });
+            {
+                roomId: roomId,
+                board: board,
+                inputBoard: inputBoard
+            });
     }
 
     function submitClick() {
@@ -310,19 +310,18 @@ function GamePage(props) {
 
     return (
         <div className='game-page__wrapper'>
-            <div className={`game-page`} onKeyDown={fillBoard} tabIndex="0">
+            <div className='game-page' onKeyDown={fillBoard} tabIndex="0">
                 <header className='game-page__header'>
                     <button className='game-page__leave' onClick={leaveClick}>
                         <img className='game-page__leave-icon' src={leaveIcon} alt='' />
                         <p className='game-page__leave-p'>Leave</p>
                     </button>
                     <div className='game-page__text'>
-                        <img className='game-page__logo' src={logo}/>
-                        {/* <h1 className='game-page__logo'>Sudo<span className={`game-page__logo-span game-page__logo-span--${props.playerNum}`}>two</span>!</h1> */}
+                        <img className='game-page__logo' src={logo} />
                         <div className='game-page__subheader'>
                             <div className='game-page__other-name'>with <span className={`game-page__subheader-span game-page__subheader-span--${otherPlayerNum}`}>{props.theirName}</span>  | </div>
                             {props.playerNum === 1 &&
-                                <Timer socket={props.socket} roomId={roomId} timerRunning={timerRunning} setTime={setTime}/>
+                                <Timer socket={props.socket} roomId={roomId} timerRunning={timerRunning} setTime={setTime} />
                             }
                             {props.playerNum === 2 &&
                                 <div className='timer'>{receivedTime}</div>
@@ -334,43 +333,45 @@ function GamePage(props) {
                         <img className='game-page__reveal-icon' src={revealIcon} alt='' />
                     </button>
                 </header>
-                <GameBoard
-                    roomId={roomId}
-                    playerNum={props.playerNum}
-                    board={board}
-                    setBoard={setBoard}
-                    solution={solution}
-                    setSelectedTile={setSelectedTile}
-                    selectedTile={selectedTile}
-                    emojiBoard={emojiBoard}
-                    inputBoard={inputBoard}
-                    otherUserSelectedTile={otherUserSelectedTile}
-                    otherUserTileValue={otherUserTileValue}
-                    socket={props.socket}
-                />
-                <div className='buttons__wrapper'>
-                    <div className='buttons__row buttons__row--1'>
-                        {buttonsRow1.map(btn => {
-                            return (
-                                <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
-                            )
-                        })}
-                    </div>
-                    <div className='buttons__row buttons__row--2'>
-                        {buttonsRow2.map(btn => {
-                            return (
-                                <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
-                            )
-                        })}
-                    </div>
-                    <div className='buttons__row buttons__row--reactions'>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`hmm-${props.playerNum}`)}>
-                            <img className='buttons__reaction--img' src={hmmNeutralEmoji}/>
-                        </button>
-                        <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`yes-${props.playerNum}`)}>
-                            <img className='buttons__reaction--img' src={yesNeutralEmoji}/>
-                        </button>
-                        <button className={`buttons__reaction buttons__reaction--submit buttons__reaction--${props.playerNum}`} onClick={submitClick}>Submit game</button>
+                <div className='game-page__game'>
+                    <GameBoard
+                        roomId={roomId}
+                        playerNum={props.playerNum}
+                        board={board}
+                        setBoard={setBoard}
+                        solution={solution}
+                        setSelectedTile={setSelectedTile}
+                        selectedTile={selectedTile}
+                        emojiBoard={emojiBoard}
+                        inputBoard={inputBoard}
+                        otherUserSelectedTile={otherUserSelectedTile}
+                        otherUserTileValue={otherUserTileValue}
+                        socket={props.socket}
+                    />
+                    <div className='buttons__wrapper'>
+                        <div className='buttons__row buttons__row--1'>
+                            {buttonsRow1.map(btn => {
+                                return (
+                                    <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
+                                )
+                            })}
+                        </div>
+                        <div className='buttons__row buttons__row--2'>
+                            {buttonsRow2.map(btn => {
+                                return (
+                                    <SelectorButton key={btn} text={btn} clickButton={clickButton} playerNum={props.playerNum} />
+                                )
+                            })}
+                        </div>
+                        <div className='buttons__row buttons__row--reactions'>
+                            <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`hmm-${props.playerNum}`)}>
+                                <img className='buttons__reaction--img' src={hmmNeutralEmoji} />
+                            </button>
+                            <button className={`buttons__reaction buttons__reaction--emoji buttons__reaction--${props.playerNum}`} onClick={() => emojiClickButton(`yes-${props.playerNum}`)}>
+                                <img className='buttons__reaction--img' src={yesNeutralEmoji} />
+                            </button>
+                            <button className={`buttons__reaction buttons__reaction--submit buttons__reaction--${props.playerNum}`} onClick={submitClick}>Submit game</button>
+                        </div>
                     </div>
                 </div>
             </div>
