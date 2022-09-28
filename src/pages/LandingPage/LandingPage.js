@@ -1,9 +1,11 @@
 import './LandingPage.scss';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import logo from '../../assets/sudotwo_images/logo_large@3x.png'
 
 function LandingPage() {
+
 
     let navigate = useNavigate();
 
@@ -23,7 +25,6 @@ function LandingPage() {
         <div className='landing__wrapper'>
             <div className='landing'>
                 <img className='landing__logo' src={logo} />
-                {/* <h1 className='landing__header'>Sudo<span className='landing__color'>two</span>!</h1> */}
                 <h2 className='landing__subheader'>These puzzles don't stand a chance</h2>
                 <SubmitButton clickButton={createGameHandler} text='Create Game' active={true} dropShadow={true}/>
                 <SubmitButton clickButton={joinGameHandler} text='Join Game' active={true} dropShadow={true}/>

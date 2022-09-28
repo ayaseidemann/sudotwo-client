@@ -150,6 +150,7 @@ function GamePage(props) {
         return () => {
             // props.socket.emit('user-disconnected', roomId);
             props.socket.disconnect();
+            window.location.reload();
         }
     }, []);
 
