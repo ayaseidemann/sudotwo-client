@@ -55,20 +55,18 @@ function JoinGame(props) {
             props.socket.emit('join-room', roomId);        
         } else {
             setroomNotFound(true);
-            // alert("this isn't a room dummy");
             // event.target.roomId.value = '';
         }
     }
 
-    // on receiving socket go-to-to, nav to game page
+    // on receiving socket go-to-game nav to game page
     function startGame() {
-        props.socket.on('go-to-game', roomId => {
-            console.log('data:', roomId);
+        props.socket.on('go-to-game', data => {
+            console.log('roomId:', data.roomId);
             props.setPlayerNum(2);
-            navigate(`/game/${roomId}`);
+            navigate(`/game/${data.roomId}`);
         })
         props.socket.on('no-entry', roomId => {
-            // alert('sorry room is full!');
             setRoomFull(true);
         })
     }

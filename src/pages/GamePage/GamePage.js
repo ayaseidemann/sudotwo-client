@@ -43,7 +43,15 @@ function GamePage(props) {
     // get board, roomId, and solution from server json
     async function getBoard() {
         try {
+            console.log('props.socket.id', props.socket.id);
             const { data: axiosGame } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/read-game/${roomId}`);
+            if (props.playerNum === 1) {
+                await axios.post(`${process.env.REACT_APP_SERVER_URL}/add-socket-id/${roomId}`, 
+                {
+                    "player1Id": props.socket.id,
+                    "player2Id": props.player2Id
+                });
+            }
             setBoard(axiosGame.board);
             setSolution(axiosGame.solution);
             // send username to socket
@@ -103,6 +111,11 @@ function GamePage(props) {
         });
         props.socket.on('receive-stop-timer', () => {
             setTimerRunning(false);
+        });
+        props.socket.on('receive-user-disconnected', () => {
+            console.log('other user disconnected');
+            alert('the other user left, bye!');
+            navigate('/');
         })
     };
 
@@ -127,7 +140,14 @@ function GamePage(props) {
 
     useEffect(() => {
         receiveTileChange();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            // props.socket.emit('user-disconnected', roomId);
+            props.socket.disconnect();
+        }
+    }, []);
 
     // useEffect(() => {
     //     socket.on('create-board', game => {
