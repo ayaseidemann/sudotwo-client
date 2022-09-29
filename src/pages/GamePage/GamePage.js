@@ -125,9 +125,10 @@ function GamePage(props) {
             setTimerRunning(false);
         });
         props.socket.on('other-disconnected', () => {
+            setShowModal(true);
+            setModalType("disconnect");            
             console.log('other user disconnected');
-            alert('sorry other player left, bye!');
-            navigate('/');
+            // alert('sorry other player left, bye!');
         });
     }, []);
 

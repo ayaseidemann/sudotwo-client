@@ -1,9 +1,12 @@
 import "./Modal.scss";
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SubmitButton from "../SubmitButton/SubmitButton";
 
 
 function Modal(props) {
+
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [text, setText] =  useState('');
@@ -23,6 +26,10 @@ function Modal(props) {
             setTitle(`Congrats!`);
             setText(`You and ${props.theirName} won the game in ${props.time}!`);
             setButtonText("Admire our work");
+        } else if (props.type === 'disconnect') {
+            setTitle('The other user left');
+            setText('Sending you back home');
+            setButtonText('Ok!')
         }
     }, [props.showModal]);
 
@@ -33,6 +40,9 @@ function Modal(props) {
     // on click function to close modal
     function onClose() {
         props.setShowModal(false);
+        if (props.type === 'disconnect') {
+            navigate('/');
+        }
     }
 
     return(

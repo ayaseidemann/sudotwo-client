@@ -32,6 +32,10 @@
 
     &__logo {
         width: 7.75rem;
+
+        @include tablet {
+            width: 14rem;
+        }
     }
 
     &__subheader {

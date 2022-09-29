@@ -31,10 +31,10 @@ function LandingPage() {
             </div>
             <footer className='footer'>
                 <div className='footer__credits'>
-                    <p className='footer__p'>Code + Art direction by @AyaSeidemann</p>
-                    <p className='footer__p'>Design by @ScottAlonzo</p>
-                    <p className='footer__p'>Sudoku API by @bertoort</p>
-                    <p className='footer__p footer__p--github'>View on Github</p>
+                    <p className='footer__p'>Code + Art direction by <a className='footer__a' href='https://github.com/ayaseidemann' target="_blank">@AyaSeidemann</a></p>
+                    <p className='footer__p'>Design by <a className='footer__a' href='https://github.com/scottalonzo' target="_blank">@ScottAlonzo</a></p>
+                    <p className='footer__p'>Sudoku API by <a className='footer__a' href='https://github.com/bertoort/sugoku' target="_blank">@bertoort</a></p>
+                    <p className='footer__p footer__p--github'><a className='footer__a' href='https://github.com/ayaseidemann/sudotwo-client' target="_blank">View on Github</a></p>
                 </div>
             </footer>
         </div>
