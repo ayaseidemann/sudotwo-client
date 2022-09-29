@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# Sudotwo!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Deployed at [sudotwo.com](https://sudotwo.com)
+Server [repo](https://github.com/ayaseidemann/sudotwo-server)
 
 ## Available Scripts
 
