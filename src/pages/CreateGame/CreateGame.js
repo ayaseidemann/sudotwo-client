@@ -61,7 +61,7 @@ function CreateGame(props) {
         <>
             <BasicHeader text='Create game' />
             {!waitingRoom &&
-                <form className='create-game' onSubmit={createRoom}>
+                <form className='create-game' onSubmit={createRoom} autocomplete="off">
                     <label className='create-game__label'>
                         <p className='create-game__label-text'>Your name</p>
                         <input
