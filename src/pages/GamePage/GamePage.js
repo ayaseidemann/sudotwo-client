@@ -8,11 +8,10 @@ import leaveIcon from '../../assets/sudotwo_images/16/leave@3x.png';
 import revealIcon from '../../assets/sudotwo_images/16/reveal@3x.png';
 import hmmNeutralEmoji from '../../assets/sudotwo_images/20/hmm-neutral@3x.png';
 import yesNeutralEmoji from '../../assets/sudotwo_images/20/yes-neutral@3x.png';
-
 import axios from 'axios';
 import Timer from '../../components/Timer/Timer';
 import Modal from '../../components/Modal/Modal';
-
+import confetti from 'canvas-confetti';
 
 function GamePage(props) {
 
@@ -118,7 +117,9 @@ function GamePage(props) {
         props.socket.on('receive-won-game', () => {
             setShowModal(true);
             setModalType("won");
-            console.log('other user submitted and you won!');
+            confetti({
+                particleCount: 100
+            });
         });
         props.socket.on('receive-stop-timer', () => {
             setTimerRunning(false);
@@ -252,7 +253,6 @@ function GamePage(props) {
             }
         }
         if (JSON.stringify(tmpBoard) === JSON.stringify(solution)) {
-            console.log('YOU DID IT!!!!');
             if (props.playerNum === 2) {
                 props.socket.emit('stop-timer', roomId);
             }
@@ -260,6 +260,9 @@ function GamePage(props) {
             props.socket.emit('won-game', roomId);
             setShowModal(true);
             setModalType('won');
+            confetti({
+                particleCount: 100
+            });
         } else {
             setShowModal(true);
             setModalType('incorrect')
@@ -308,6 +311,8 @@ function GamePage(props) {
         }
     }
 
+    const hideButtons = modalType === 'won' ? "buttons__wrapper--hide" : "";
+
     return (
         <div className='game-page__wrapper'>
             <div className='game-page' onKeyDown={fillBoard} tabIndex="0">
@@ -348,7 +353,7 @@ function GamePage(props) {
                         otherUserTileValue={otherUserTileValue}
                         socket={props.socket}
                     />
-                    <div className='buttons__wrapper'>
+                    <div className={`buttons__wrapper ${hideButtons}`}>
                         <div className='buttons__row buttons__row--1'>
                             {buttonsRow1.map(btn => {
                                 return (
