@@ -180,18 +180,14 @@ function GamePage(props) {
         });
     }
 
-    // click handler for number or delete buttons 
-    function clickButton(event) {
-        // setInputVal(event.target.innerText);
-        // if the button is 'X' set value of selected tile to blank, otherwise keep it the button's value
+    function updateTile(value) {
         const tmpBoard = [...board];
-        const newValue = event.target.innerText === '×' ? 0 : event.target.innerText;
         // if the value, is now blank, make sure the corresponding emoji is deleted
-        if (newValue === 0) {
+        if (value === 0) {
             updateSelectedEmoji('');
         }
         // set selected tile in board to button's value
-        tmpBoard[selectedTile[0]][selectedTile[1]] = newValue;
+        tmpBoard[selectedTile[0]][selectedTile[1]] = value;
         setBoard(tmpBoard);
         // update input board to player's number in the position of the updated tile
         const tmpInputBoard = [...inputBoard];
@@ -206,6 +202,16 @@ function GamePage(props) {
             });
     }
 
+    // click handler for number or delete buttons 
+    function clickButton(event) {
+        console.log('selectedTile length', selectedTile.length);
+        if (selectedTile.length === 2) {
+            const newValue = event.target.innerText === '×' ? 0 : event.target.innerText;
+            console.log('click event value', newValue);
+            updateTile(newValue);
+        }
+    }
+
     // click handler for emoji buttons
     function emojiClickButton(className) {
         updateSelectedEmoji(className);
@@ -216,21 +222,23 @@ function GamePage(props) {
     }
 
     function revealClick(event) {
-        let tmpBoard = [...board];
-        tmpBoard[selectedTile[0]][selectedTile[1]] = String(solution[selectedTile[0]][selectedTile[1]]);
-        setBoard(tmpBoard);
-        const tmpInputBoard = [...inputBoard];
-        tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum + 2;
-        setInputBoard(tmpInputBoard);
-        console.log('board', board);
-        console.log('inputBoard', inputBoard);
-        // emit to socket when a change is made
-        props.socket.emit('tile-change',
-            {
-                roomId: roomId,
-                board: board,
-                inputBoard: inputBoard
-            });
+        if (selectedTile.length === 2 ) {
+            let tmpBoard = [...board];
+            tmpBoard[selectedTile[0]][selectedTile[1]] = String(solution[selectedTile[0]][selectedTile[1]]);
+            setBoard(tmpBoard);
+            const tmpInputBoard = [...inputBoard];
+            tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum + 2;
+            setInputBoard(tmpInputBoard);
+            console.log('board', board);
+            console.log('inputBoard', inputBoard);
+            // emit to socket when a change is made
+            props.socket.emit('tile-change',
+                {
+                    roomId: roomId,
+                    board: board,
+                    inputBoard: inputBoard
+                });
+        }
     }
 
     function submitClick() {
@@ -272,6 +280,7 @@ function GamePage(props) {
     }
 
     function fillBoard(event) {
+        console.log(event.key);
         if (event.key === 'p') {
             console.log('filling board with ones');
             let tmpBoard = [...board];
@@ -309,6 +318,15 @@ function GamePage(props) {
                     inputBoard: inputBoard
                 });
             setBoard(tmpBoard);
+        }
+        if (event.key==='1' || event.key==='2' || event.key==='3' || event.key==='4' || event.key==='5' 
+        || event.key==='6' || event.key==='7' || event.key==='8' || event.key==='9' || event.key==='Backspace') {
+            console.log('selectedTile length', selectedTile.length);
+            if (selectedTile.length === 2) {
+                const newValue = event.key === 'Backspace' ? 0 : event.key;
+                console.log('num press event value', newValue);
+                updateTile(newValue);   
+            } 
         }
     }
 
