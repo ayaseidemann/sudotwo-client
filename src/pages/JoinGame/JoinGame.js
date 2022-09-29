@@ -78,7 +78,7 @@ function JoinGame(props) {
     return (
         <div className='join-game__wrapper'>
             <BasicHeader text='Join game' />
-            <form className='join-game' onSubmit={joinExistingRoom} autocomplete="off">
+            <form className='join-game' onSubmit={joinExistingRoom} autoComplete="off">
                 <label className='join-game__label'>
                     <p className='join-game__label-text'>Your name</p>
                     <input

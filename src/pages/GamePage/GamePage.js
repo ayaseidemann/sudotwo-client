@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import GameBoard from '../../components/GameBoard/GameBoard';
 import SelectorButton from '../../components/SelectorButton/SelectorButton';
-import logo from '../../assets/sudotwo_images/logo_small@3x.png';
+import logo from '../../assets/sudotwo_images/logo_small@4x.png';
 import leaveIcon from '../../assets/sudotwo_images/16/leave@3x.png';
 import revealIcon from '../../assets/sudotwo_images/16/reveal@3x.png';
 import hmmNeutralEmoji from '../../assets/sudotwo_images/20/hmm-neutral@3x.png';
@@ -204,10 +204,8 @@ function GamePage(props) {
 
     // click handler for number or delete buttons 
     function clickButton(event) {
-        console.log('selectedTile length', selectedTile.length);
         if (selectedTile.length === 2) {
             const newValue = event.target.innerText === '×' ? 0 : event.target.innerText;
-            console.log('click event value', newValue);
             updateTile(newValue);
         }
     }
@@ -229,8 +227,6 @@ function GamePage(props) {
             const tmpInputBoard = [...inputBoard];
             tmpInputBoard[selectedTile[0]][selectedTile[1]] = props.playerNum + 2;
             setInputBoard(tmpInputBoard);
-            console.log('board', board);
-            console.log('inputBoard', inputBoard);
             // emit to socket when a change is made
             props.socket.emit('tile-change',
                 {
@@ -275,14 +271,11 @@ function GamePage(props) {
         } else {
             setShowModal(true);
             setModalType('incorrect')
-            console.log('setting show modal to true on submitting incorrect game');
         }
     }
 
     function fillBoard(event) {
-        console.log(event.key);
         if (event.key === 'p') {
-            console.log('filling board with ones');
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
                 return row.map((tile, j) => {
@@ -301,7 +294,6 @@ function GamePage(props) {
             setBoard(tmpBoard);
         }
         if (event.key === 'l') {
-            console.log('filling board with solution');
             let tmpBoard = [...board];
             tmpBoard.map((row, i) => {
                 return row.map((tile, j) => {
@@ -321,10 +313,8 @@ function GamePage(props) {
         }
         if (event.key==='1' || event.key==='2' || event.key==='3' || event.key==='4' || event.key==='5' 
         || event.key==='6' || event.key==='7' || event.key==='8' || event.key==='9' || event.key==='Backspace') {
-            console.log('selectedTile length', selectedTile.length);
             if (selectedTile.length === 2) {
                 const newValue = event.key === 'Backspace' ? 0 : event.key;
-                console.log('num press event value', newValue);
                 updateTile(newValue);   
             } 
         }

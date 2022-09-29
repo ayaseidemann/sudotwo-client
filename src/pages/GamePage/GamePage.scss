@@ -132,6 +132,18 @@
             height: 3.2rem;
         }
 
+        &:hover {
+            cursor: pointer;
+            border-top-width: 1px;
+            box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
+            padding-bottom: 2px;
+        }
+    
+        &:active {
+            box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.25);
+            padding: 2px 0 0 0;
+        }
+
         &--emoji {
             width: 3.2rem;
 

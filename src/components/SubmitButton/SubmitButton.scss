@@ -25,6 +25,14 @@
     &--active {
         &:hover {
             cursor: pointer;
+            border-top-width: 1px;
+            box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25);
+            padding-bottom: 2px;
+        }
+
+        &:active {
+            box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.25);
+            padding: 2px 0 0 0;
         }
     }
 
@@ -36,5 +44,13 @@
 
     &--shadow {
         box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.25), 8px 16px 0px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            box-shadow: inset 0px -3px 0px rgba(0, 0, 0, 0.25), 8px 16px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+            box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.25), 8px 16px 0px rgba(0, 0, 0, 0.1);
+        }
     }
 }
