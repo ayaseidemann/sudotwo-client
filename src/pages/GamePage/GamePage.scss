@@ -7,7 +7,7 @@
     align-items: center;
 
     &__wrapper {
-        height: 100vh;
+        height: 100%;
     }
 
     &__header {
@@ -32,6 +32,10 @@
 
     &__logo {
         width: 7.75rem;
+
+        @include tablet {
+            width: 14rem;
+        }
     }
 
     &__subheader {

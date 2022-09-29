@@ -11,7 +11,7 @@
 .full-landing {
     position: relative;
     overflow: hidden;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
 }
 
@@ -76,5 +76,13 @@
 
     &__p {
         margin: 0 0 0.25rem 0;
+
+        &--github {
+            margin-top: 0.4rem;
+        }
+    }
+
+    &__a {
+        font-weight: $extra-bold;
     }
 }
