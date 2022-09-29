@@ -100,6 +100,10 @@
         @include tablet {
             width: 23.4rem;
         }
+
+        &--hide {
+            visibility: hidden;
+        }
     }
 
     &__row {
