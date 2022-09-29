@@ -11,18 +11,18 @@ Sudotwo! is two-player a cooperative sudoku game together! A player is able to c
 
 Clone source code locally:
 
-### git clone https://github.com/ayaseidemann/sudotwo-client
+`git clone https://github.com/ayaseidemann/sudotwo-client`
 
 To install dependencies:
 
-### npm install
+`npm install`
 
 Start running:
 
-### `npm start`
+`npm start`
 
-** Environment variable example for .env file:
+**Environment variable example for .env file:**
 
-### REACT_APP_SERVER_URL=<url of the server>
+`REACT_APP_SERVER_URL=<url of the server>`
 
 Your app is ready to be deployed!
