@@ -5,7 +5,8 @@ Server [repo](https://github.com/ayaseidemann/sudotwo-server)
 
 ## Description
 
-Sudotwo! is two-player a cooperative sudoku game together! A player is able to create their own game room or join an existing room, and edit the board collaboratively with another player.
+Sudotwo! is two-player a cooperative sudoku game site! A player is able to create their own game 
+room or join an existing room, and edit the board collaboratively with another player.
 
 ## Installation
 
